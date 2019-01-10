@@ -1,8 +1,4 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as rightActions from "../redux/Actions/SideNavRight-Actions";
-import * as headerActions from "../redux/Actions/HeaderNav-Actions";
-import * as leftActions from "../redux/Actions/SideNavLeft-Actions";
+import React from "react";
 import { Map, List, fromJS } from "immutable";
 import "antd/dist/antd.css";
 import { Menu, Icon, Switch } from "antd";
@@ -10,7 +6,14 @@ import Cookies from "js-cookie";
 
 const SideNavRight = props => {
   const { SubMenu } = Menu;
-  const { rightNavTheme, headerTheme, sideNavLeft, dispatch } = props;
+  const {
+    rightNavTheme,
+    headerTheme,
+    sideNavLeft,
+    headerThemeAction,
+    leftThemeAction,
+    rightThemeAction
+  } = props;
   return (
     <div>
       <Menu
@@ -42,7 +45,7 @@ const SideNavRight = props => {
             onChange={event => {
               Cookies.set("leftTheme", sideNavLeft);
               console.log(sideNavLeft);
-              return dispatch(leftActions.theme(event));
+              return leftThemeAction(event);
             }}
           />
         </Menu.Item>
@@ -67,7 +70,7 @@ const SideNavRight = props => {
             }
             onChange={event => {
               Cookies.set("rightTheme", rightNavTheme);
-              return dispatch(rightActions.theme(event));
+              return rightThemeAction(event);
             }}
           />
         </Menu.Item>
@@ -92,7 +95,7 @@ const SideNavRight = props => {
             }
             onChange={event => {
               Cookies.set("headerTheme", headerTheme);
-              return dispatch(headerActions.theme(event));
+              return headerThemeAction(event);
             }}
           />
         </Menu.Item>

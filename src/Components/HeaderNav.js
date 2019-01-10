@@ -1,6 +1,4 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as actions from "../redux/Actions/HeaderNav-Actions";
+import React from "react";
 import { Map, List, fromJS } from "immutable";
 import "antd/dist/antd.css";
 import { Layout, Menu, Breadcrumb, Icon, Input, Radio, Avatar } from "antd";

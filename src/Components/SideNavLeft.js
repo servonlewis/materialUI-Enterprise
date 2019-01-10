@@ -1,6 +1,4 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as actions from "../redux/Actions/SideNavLeft-Actions";
+import React from "react";
 import { Map, List, fromJS } from "immutable";
 import "antd/dist/antd.css";
 import { Menu, Icon, Switch, Modal } from "antd";
@@ -18,27 +16,56 @@ const SideNavLeft = props => {
             Cookies.get("leftTheme") ? Cookies.get("leftTheme") : sideNavLeft
           }
         >
-          <Menu.Item title="Home" key="10" style={{ marginTop: "1em" }}>
+          <Menu.Item
+            title="Home"
+            key="10"
+            style={{
+              backgroundColor: "#123a5f",
+              padding: "2.2em",
+              marginTop: "0"
+            }}
+          >
+            <Icon
+              type="frown"
+              theme="twoTone"
+              style={{
+                fontSize: "2em",
+                position: "relative",
+                top: collapsed ? null : "-.7em",
+                marginLeft: "-.2em"
+              }}
+            />
+
             <span
               style={{
-                fontSize: "1.2em",
-                fontFamily: "Comic Sans MS, cursive, sans-serif"
+                color: "white",
+
+                outlineColor: "red",
+                fontSize: "1.8em",
+                fontFamily: "Comic Sans MS, cursive, sans-serif",
+                position: "relative",
+                top: collapsed ? null : "-.7em"
               }}
             >
-              NB
+              NB-Dms
             </span>
           </Menu.Item>
 
           <Menu.Item key="1">
-            <Icon type="mail" />
-            <span> Home </span>
+            <Icon
+              type="home"
+              theme="twoTone"
+              twoToneColor="skyblue"
+              style={{ fontSize: "1.2em" }}
+            />
+            <span> Dashboard </span>
           </Menu.Item>
 
           <SubMenu
             key="sub5"
             title={
               <span>
-                <Icon type="appstore" />
+                <Icon type="user" style={{ color: "red", fontSize: "1.2em" }} />
                 <span>User Actions</span>
               </span>
             }
@@ -50,7 +77,10 @@ const SideNavLeft = props => {
             key="sub1"
             title={
               <span>
-                <Icon type="appstore" />
+                <Icon
+                  type="desktop"
+                  style={{ color: "orange", fontSize: "1.2em" }}
+                />
                 <span>Desktop Actions</span>
               </span>
             }
@@ -62,12 +92,29 @@ const SideNavLeft = props => {
             key="sub2"
             title={
               <span>
-                <Icon type="setting" />
-                <span>Group</span>
+                <Icon
+                  type="file-sync"
+                  style={{ color: "lightgreen", fontSize: "1.2em" }}
+                />
+                <span>From Csv</span>
               </span>
             }
           >
             <Menu.Item key="7">Option 7</Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="sub3"
+            title={
+              <span>
+                <Icon
+                  type="alert"
+                  style={{ color: "#FE5151", fontSize: "1.2em" }}
+                />
+                <span>Monitoring</span>
+              </span>
+            }
+          >
+            <Menu.Item key="8">Option 7</Menu.Item>
           </SubMenu>
         </Menu>
       ) : (
@@ -99,26 +146,33 @@ const SideNavLeft = props => {
             <span
               style={{
                 color: "white",
+
+                outlineColor: "red",
                 fontSize: "1.8em",
                 fontFamily: "Comic Sans MS, cursive, sans-serif",
                 position: "relative",
                 top: collapsed ? null : "-.7em"
               }}
             >
-              Neuberger
+              NB-Dms
             </span>
           </Menu.Item>
 
           <Menu.Item key="1">
-            <Icon type="mail" />
-            <span> Home </span>
+            <Icon
+              type="home"
+              theme="twoTone"
+              twoToneColor="skyblue"
+              style={{ fontSize: "1.2em" }}
+            />
+            <span> Dashboard </span>
           </Menu.Item>
 
           <SubMenu
             key="sub5"
             title={
               <span>
-                <Icon type="appstore" />
+                <Icon type="user" style={{ color: "red", fontSize: "1.2em" }} />
                 <span>User Actions</span>
               </span>
             }
@@ -130,7 +184,10 @@ const SideNavLeft = props => {
             key="sub1"
             title={
               <span>
-                <Icon type="appstore" />
+                <Icon
+                  type="desktop"
+                  style={{ color: "orange", fontSize: "1.2em" }}
+                />
                 <span>Desktop Actions</span>
               </span>
             }
@@ -142,12 +199,29 @@ const SideNavLeft = props => {
             key="sub2"
             title={
               <span>
-                <Icon type="setting" />
-                <span>Group</span>
+                <Icon
+                  type="file-sync"
+                  style={{ color: "lightgreen", fontSize: "1.2em" }}
+                />
+                <span>From Csv</span>
               </span>
             }
           >
             <Menu.Item key="7">Option 7</Menu.Item>
+          </SubMenu>
+          <SubMenu
+            key="sub3"
+            title={
+              <span>
+                <Icon
+                  type="alert"
+                  style={{ color: "#FE5151", fontSize: "1.2em" }}
+                />
+                <span>Monitoring</span>
+              </span>
+            }
+          >
+            <Menu.Item key="8">Option 7</Menu.Item>
           </SubMenu>
         </Menu>
       )}

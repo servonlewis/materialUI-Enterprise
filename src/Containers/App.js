@@ -22,22 +22,19 @@ import {
 import { Layout, Row, Col, Icon, Modal } from "antd";
 
 class App extends Component {
-  componentDidMount() {
-    /* 
-    this.props.dispatch(leftActions.theme(Cookies.get("leftTheme")));
-    this.props.dispatch(rightActions.theme(Cookies.get("rightTheme")));
-    this.props.dispatch(headerActions.theme(Cookies.get("headerTheme"))); */
-  }
+  componentDidMount() {}
   render() {
     const { Header, Sider, Content, Footer } = Layout;
     const {
-      dispatch,
       collapsed,
       sideNavLeft,
       headerTheme,
-      rightNavTheme
+      rightNavTheme,
+      collapseMe,
+      headerThemeAction,
+      leftThemeAction,
+      rightThemeAction
     } = this.props;
-    const { collapseMe } = actions;
     return (
       <Layout hasSider={true} style={{ minHeight: "100vh" }}>
         <Sider
@@ -52,13 +49,9 @@ class App extends Component {
             overflow: isMobile ? null : "hidden",
             marginTop: isMobile ? "5em" : null
           }}
-          onCollapse={collapsed => dispatch(collapseMe(collapsed))}
+          onCollapse={collapsed => collapseMe(collapsed)}
         >
-          <SideNavLeft
-            collapsed={collapsed}
-            sideNavLeft={sideNavLeft}
-            dispatch={dispatch}
-          />
+          <SideNavLeft collapsed={collapsed} sideNavLeft={sideNavLeft} />
         </Sider>
         <Layout>
           <Header
@@ -70,10 +63,10 @@ class App extends Component {
                 : "#fff"
             }}
           >
-            <HeaderNav headerTheme={headerTheme} dispatch={dispatch} />
+            <HeaderNav headerTheme={headerTheme} />
           </Header>
           <Content>
-            <MidContent dispatch={dispatch} />
+            <MidContent />
           </Content>
 
           <Footer>
@@ -101,7 +94,9 @@ class App extends Component {
             rightNavTheme={rightNavTheme}
             sideNavLeft={sideNavLeft}
             headerTheme={headerTheme}
-            dispatch={dispatch}
+            headerThemeAction={headerThemeAction}
+            leftThemeAction={leftThemeAction}
+            rightThemeAction={rightThemeAction}
           />
         </Sider>
       </Layout>
@@ -109,15 +104,23 @@ class App extends Component {
   } // end Render
 } // end App
 
-const mapStateToProps = state => {
-  return {
-    collapsed: state.appReducer.collapsed,
-    event: state.appReducer.event,
-    config: state.appReducer.config,
-    endpoint: state.appReducer.endpoint,
-    sideNavLeft: state.sideNavLeft.theme,
-    headerTheme: state.headerNav.theme,
-    rightNavTheme: state.sideNavRight.theme
-  };
-};
-export default connect(mapStateToProps)(App);
+const mapStateToProps = state => ({
+  collapsed: state.appReducer.collapsed,
+  event: state.appReducer.event,
+  config: state.appReducer.config,
+  endpoint: state.appReducer.endpoint,
+  sideNavLeft: state.sideNavLeft.theme,
+  headerTheme: state.headerNav.theme,
+  rightNavTheme: state.sideNavRight.theme
+});
+
+const mapDispatchToProps = dispatch => ({
+  collapseMe: collapsed => dispatch(actions.collapseMe(collapsed)),
+  headerThemeAction: color => dispatch(headerActions.theme(color)),
+  leftThemeAction: color => dispatch(leftActions.theme(color)),
+  rightThemeAction: color => dispatch(rightActions.theme(color))
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
