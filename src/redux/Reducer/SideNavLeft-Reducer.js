@@ -7,7 +7,7 @@ const sideNavLeftReducer = (state = defaultState, action) => {
     case types.LEFTTHEME:
       return {
         ...state,
-        theme: action.data.color
+        theme: action.data
       }; // end return
     default:
       return { ...state };

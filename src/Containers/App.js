@@ -12,6 +12,7 @@ import SideNavLeft from "../Components/SideNavLeft";
 import SideNavRight from "../Components/SideNavRight";
 import EndFooter from "../Components/Footer";
 import Cookies from "js-cookie";
+import { push } from "connected-react-router";
 import {
   BrowserView,
   MobileView,
@@ -44,28 +45,50 @@ class App extends Component {
           collapsedWidth={isMobile ? 0 : "5em"}
           width={"20em"}
           style={{
-            position: isMobile ? "fixed" : null,
+            position: "fixed",
+            overflow: "scroll",
+            zIndex: 50000,
             height: "100vh",
-            overflow: isMobile ? null : "hidden",
-            marginTop: isMobile ? "5em" : null
+            overflowY: "auto",
+            overflowX: "hidden"
           }}
           onCollapse={collapsed => collapseMe(collapsed)}
         >
-          <SideNavLeft collapsed={collapsed} sideNavLeft={sideNavLeft} />
+          <SideNavLeft
+            collapsed={collapsed}
+            sideNavLeft={sideNavLeft}
+            push={push}
+          />
         </Sider>
         <Layout>
           <Header
             style={{
-              backgroundColor: isBrowser
-                ? Cookies.get("headerTheme") !== "dark"
-                  ? "#fff "
-                  : "#001529"
-                : "#fff"
+              backgroundColor:
+                Cookies.get("headerTheme") === "dark"
+                  ? "#001529"
+                  : Cookies.get("headerTheme") === "light"
+                  ? "#fff"
+                  : null,
+              position: "fixed",
+              overflow: "hidden",
+              zIndex: 5,
+              width: "100%"
             }}
           >
-            <HeaderNav headerTheme={headerTheme} />
+            <HeaderNav
+              headerTheme={headerTheme}
+              rightThemeAction={rightThemeAction}
+              rightNavTheme={rightNavTheme}
+            />
           </Header>
-          <Content>
+          <Content
+            style={{
+              zIndex: 0,
+              marginLeft: collapsed ? "6em" : "21em",
+              marginTop: "5em",
+              transition: ".3s"
+            }}
+          >
             <MidContent />
           </Content>
 
@@ -74,31 +97,14 @@ class App extends Component {
           </Footer>
         </Layout>
 
-        <Sider
-          collapsedWidth="0em"
-          collapsible={true}
-          defaultCollapsed={true}
-          width={"20em"}
-          style={{ height: "100vh" }}
-          trigger={isMobile ? null : ""}
-          onCollapse={collapsed => {
-            const elements = document.getElementsByClassName(
-              "ant-layout-sider-zero-width-trigger"
-            );
-            !collapsed
-              ? elements[0].classList.add("rightTrigger-after")
-              : elements[0].classList.remove("rightTrigger-after");
-          }}
-        >
-          <SideNavRight
-            rightNavTheme={rightNavTheme}
-            sideNavLeft={sideNavLeft}
-            headerTheme={headerTheme}
-            headerThemeAction={headerThemeAction}
-            leftThemeAction={leftThemeAction}
-            rightThemeAction={rightThemeAction}
-          />
-        </Sider>
+        <SideNavRight
+          rightNavTheme={rightNavTheme}
+          sideNavLeft={sideNavLeft}
+          headerTheme={headerTheme}
+          headerThemeAction={headerThemeAction}
+          leftThemeAction={leftThemeAction}
+          rightThemeAction={rightThemeAction}
+        />
       </Layout>
     ); // end Return
   } // end Render

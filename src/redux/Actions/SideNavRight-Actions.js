@@ -1,11 +1,9 @@
 import types from "../Actions/Types";
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects";
+
 export const theme = data => {
-  const color = data === true ? "light" : "dark";
   return {
-    type: types.RIGHTTHEME,
-    data: {
-      color
-    }
+    type: types.RIGHTACTION,
+    data: data ? false : data === false ? true : null
   };
 }; // end Sample

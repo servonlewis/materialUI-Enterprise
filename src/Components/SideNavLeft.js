@@ -16,15 +16,7 @@ const SideNavLeft = props => {
             Cookies.get("leftTheme") ? Cookies.get("leftTheme") : sideNavLeft
           }
         >
-          <Menu.Item
-            title="Home"
-            key="10"
-            style={{
-              backgroundColor: "#123a5f",
-              padding: "2.2em",
-              marginTop: "0"
-            }}
-          >
+          <Menu.Item title="Home" key="1" style={{}}>
             <Icon
               type="frown"
               theme="twoTone"
@@ -35,34 +27,30 @@ const SideNavLeft = props => {
                 marginLeft: "-.2em"
               }}
             />
-
-            <span
-              style={{
-                color: "white",
-
-                outlineColor: "red",
-                fontSize: "1.8em",
-                fontFamily: "Comic Sans MS, cursive, sans-serif",
-                position: "relative",
-                top: collapsed ? null : "-.7em"
-              }}
-            >
-              NB-Dms
-            </span>
           </Menu.Item>
 
-          <Menu.Item key="1">
+          <Menu.Item key="2">
             <Icon
               type="home"
               theme="twoTone"
               twoToneColor="skyblue"
               style={{ fontSize: "1.2em" }}
             />
+            <span> Main </span>
+          </Menu.Item>
+
+          <Menu.Item key="3">
+            <Icon
+              type="dashboard"
+              theme="twoTone"
+              twoToneColor="#ccc"
+              style={{ fontSize: "1.2em" }}
+            />
             <span> Dashboard </span>
           </Menu.Item>
 
           <SubMenu
-            key="sub5"
+            key="sub1"
             title={
               <span>
                 <Icon type="user" style={{ color: "red", fontSize: "1.2em" }} />
@@ -70,11 +58,11 @@ const SideNavLeft = props => {
               </span>
             }
           >
-            <Menu.Item key="3">Option 3</Menu.Item>
-            <Menu.Item key="4">Option 4</Menu.Item>
+            <Menu.Item key="4">Option 3</Menu.Item>
+            <Menu.Item key="5">Option 4</Menu.Item>
           </SubMenu>
           <SubMenu
-            key="sub1"
+            key="sub2"
             title={
               <span>
                 <Icon
@@ -85,11 +73,11 @@ const SideNavLeft = props => {
               </span>
             }
           >
-            <Menu.Item key="5">Option 3</Menu.Item>
-            <Menu.Item key="6">Option 4</Menu.Item>
+            <Menu.Item key="6">Option 3</Menu.Item>
+            <Menu.Item key="7">Option 4</Menu.Item>
           </SubMenu>
           <SubMenu
-            key="sub2"
+            key="sub3"
             title={
               <span>
                 <Icon
@@ -100,22 +88,34 @@ const SideNavLeft = props => {
               </span>
             }
           >
-            <Menu.Item key="7">Option 7</Menu.Item>
+            <Menu.Item key="8">Option 7</Menu.Item>
           </SubMenu>
           <SubMenu
-            key="sub3"
+            key="sub4"
             title={
               <span>
                 <Icon
-                  type="alert"
-                  style={{ color: "#FE5151", fontSize: "1.2em" }}
+                  type="security-scan"
+                  style={{ color: "skyblue", fontSize: "1.2em" }}
                 />
-                <span>Monitoring</span>
+                <span>Altiris</span>
               </span>
             }
           >
-            <Menu.Item key="8">Option 7</Menu.Item>
+            <Menu.Item key="9">Option 7</Menu.Item>
           </SubMenu>
+
+          <Menu.Item key="10">
+            <span>
+              <Icon
+                type="file-text"
+                theme="twoTone"
+                twoToneColor="skyblue"
+                style={{ color: "#fff", fontSize: "1.2em" }}
+              />
+              <span> Logs </span>
+            </span>
+          </Menu.Item>
         </Menu>
       ) : (
         <Menu
@@ -126,7 +126,7 @@ const SideNavLeft = props => {
         >
           <Menu.Item
             title="Home"
-            key="10"
+            key="1"
             style={{
               backgroundColor: "#123a5f",
               padding: "2.2em",
@@ -158,18 +158,28 @@ const SideNavLeft = props => {
             </span>
           </Menu.Item>
 
-          <Menu.Item key="1">
+          <Menu.Item key="2">
             <Icon
               type="home"
               theme="twoTone"
               twoToneColor="skyblue"
               style={{ fontSize: "1.2em" }}
             />
-            <span> Dashboard </span>
+            <span> Main </span>
+          </Menu.Item>
+
+          <Menu.Item key="3">
+            <Icon
+              type="dashboard"
+              theme="twoTone"
+              twoToneColor="#ccc"
+              style={{ fontSize: "1.2em" }}
+            />
+            <span>Dashboard</span>
           </Menu.Item>
 
           <SubMenu
-            key="sub5"
+            key="sub1"
             title={
               <span>
                 <Icon type="user" style={{ color: "red", fontSize: "1.2em" }} />
@@ -177,11 +187,11 @@ const SideNavLeft = props => {
               </span>
             }
           >
-            <Menu.Item key="3">Option 3</Menu.Item>
-            <Menu.Item key="4">Option 4</Menu.Item>
+            <Menu.Item key="4">Option 3</Menu.Item>
+            <Menu.Item key="5">Option 4</Menu.Item>
           </SubMenu>
           <SubMenu
-            key="sub1"
+            key="sub2"
             title={
               <span>
                 <Icon
@@ -192,11 +202,11 @@ const SideNavLeft = props => {
               </span>
             }
           >
-            <Menu.Item key="5">Option 3</Menu.Item>
-            <Menu.Item key="6">Option 4</Menu.Item>
+            <Menu.Item key="6">Option 3</Menu.Item>
+            <Menu.Item key="7">Option 4</Menu.Item>
           </SubMenu>
           <SubMenu
-            key="sub2"
+            key="sub3"
             title={
               <span>
                 <Icon
@@ -207,22 +217,34 @@ const SideNavLeft = props => {
               </span>
             }
           >
-            <Menu.Item key="7">Option 7</Menu.Item>
+            <Menu.Item key="8">Option 7</Menu.Item>
           </SubMenu>
           <SubMenu
-            key="sub3"
+            key="sub4"
             title={
               <span>
                 <Icon
-                  type="alert"
-                  style={{ color: "#FE5151", fontSize: "1.2em" }}
+                  type="security-scan"
+                  style={{ color: "skyblue", fontSize: "1.2em" }}
                 />
-                <span>Monitoring</span>
+                <span>Altiris</span>
               </span>
             }
           >
-            <Menu.Item key="8">Option 7</Menu.Item>
+            <Menu.Item key="9">Option 7</Menu.Item>
           </SubMenu>
+
+          <Menu.Item key="10">
+            <span>
+              <Icon
+                type="file-text"
+                theme="twoTone"
+                twoToneColor="skyblue"
+                style={{ color: "#fff", fontSize: "1.2em" }}
+              />
+              <span>Logs</span>
+            </span>
+          </Menu.Item>
         </Menu>
       )}
     </div>

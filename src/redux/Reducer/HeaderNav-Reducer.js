@@ -7,7 +7,7 @@ const headerReducer = (state = defaultState, action) => {
     case types.HEADERTHEME:
       return {
         ...state,
-        theme: action.data.color
+        theme: action.data
       }; // end return
 
     default:

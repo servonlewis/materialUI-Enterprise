@@ -1,7 +1,7 @@
 import React from "react";
 import { Map, List, fromJS } from "immutable";
 import "antd/dist/antd.css";
-import { Menu, Icon, Switch } from "antd";
+import { Menu, Icon, Switch, Modal, Row, Col } from "antd";
 import Cookies from "js-cookie";
 
 const SideNavRight = props => {
@@ -16,90 +16,110 @@ const SideNavRight = props => {
   } = props;
   return (
     <div>
-      <Menu
-        mode="inline"
-        theme={
-          Cookies.get("rightTheme") ? Cookies.get("rightTheme") : rightNavTheme
-        }
-        style={{ height: "100vh" }}
-        inlineCollapsed={true}
-        forceSubMenuRender={true}
+      <Modal
+        style={{
+          float: "right",
+          marginRight: "1em"
+        }}
+        width="20em"
+        title="Basic Modal"
+        visible={rightNavTheme ? true : false}
+        title={<h2 style={{ color: "green" }}>Site Designer</h2>}
+        onOk={() => rightThemeAction(true)}
+        onCancel={() => rightThemeAction(true)}
       >
-        <Menu.Item key="1" style={{ marginTop: "4em", fontSize: "1.5em" }}>
-          <Icon type="setting" />
-          Page Styling
-        </Menu.Item>
-        <Menu.Item key="2" style={{}}>
-          Left Nav theme
-          <Switch
-            style={{ float: "right", marginTop: ".7em" }}
-            checkedChildren={
-              Cookies.get("leftTheme") ? Cookies.get("leftTheme") : sideNavLeft
-            }
-            unCheckedChildren={
-              Cookies.get("leftTheme") ? Cookies.get("leftTheme") : sideNavLeft
-            }
-            defaultChecked={
-              Cookies.get("leftTheme") ? Cookies.get("leftTheme") : sideNavLeft
-            }
-            onChange={event => {
-              Cookies.set("leftTheme", sideNavLeft);
-              console.log(sideNavLeft);
-              return leftThemeAction(event);
-            }}
-          />
-        </Menu.Item>
-        <Menu.Item key="3" style={{}}>
-          Right Nav theme
-          <Switch
-            style={{ float: "right", marginTop: ".7em" }}
-            checkedChildren={
-              Cookies.get("rightTheme")
-                ? Cookies.get("rightTheme")
-                : rightNavTheme
-            }
-            unCheckedChildren={
-              Cookies.get("rightTheme")
-                ? Cookies.get("rightTheme")
-                : rightNavTheme
-            }
-            defaultChecked={
-              Cookies.get("rightTheme")
-                ? Cookies.get("rightTheme")
-                : rightNavTheme
-            }
-            onChange={event => {
-              Cookies.set("rightTheme", rightNavTheme);
-              return rightThemeAction(event);
-            }}
-          />
-        </Menu.Item>
-        <Menu.Item key="4" style={{}}>
-          Header Nav theme
-          <Switch
-            style={{ float: "right", marginTop: ".7em" }}
-            checkedChildren={
-              Cookies.get("headerTheme")
-                ? Cookies.get("headerTheme")
-                : headerTheme
-            }
-            unCheckedChildren={
-              Cookies.get("headerTheme")
-                ? Cookies.get("headerTheme")
-                : headerTheme
-            }
-            defaultChecked={
-              Cookies.get("headerTheme")
-                ? Cookies.get("headerTheme")
-                : headerTheme
-            }
-            onChange={event => {
-              Cookies.set("headerTheme", headerTheme);
-              return headerThemeAction(event);
-            }}
-          />
-        </Menu.Item>
-      </Menu>
+        <div style={{ height: "50vh" }}>
+          <Row>
+            <Col
+              span={14}
+              style={{
+                textShadow: "2px 1px 2px #1890ff",
+                fontSize: "1.2em"
+              }}
+            >
+              Left Nav theme
+            </Col>
+            <Col span={3}>
+              <div
+                onClick={() => {
+                  Cookies.set("leftTheme", "light");
+                  return leftThemeAction("light");
+                }}
+                style={{
+                  backgroundColor: "#fff",
+                  width: 20,
+                  height: 20,
+                  border: "solid",
+                  cursor: "pointer",
+                  borderRadius: 3
+                }}
+              />
+            </Col>
+            <Col span={3}>
+              <div
+                onClick={() => {
+                  Cookies.set("leftTheme", "dark");
+                  return leftThemeAction("dark");
+                }}
+                style={{
+                  backgroundColor: "#001529",
+                  width: 20,
+                  height: 20,
+                  border: "solid",
+                  cursor: "pointer",
+                  cursor: "pointer",
+                  borderRadius: 3
+                }}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              span={14}
+              style={{
+                textShadow: "2px 1px 2px lightgreen",
+                fontSize: "1.2em"
+              }}
+            >
+              Header Theme
+            </Col>
+
+            <Col span={3}>
+              <div
+                onClick={() => {
+                  Cookies.set("headerTheme", "light");
+                  return headerThemeAction("light");
+                }}
+                style={{
+                  backgroundColor: "#fff",
+                  width: 20,
+                  height: 20,
+                  border: "solid",
+                  cursor: "pointer",
+                  borderRadius: 3
+                }}
+              />
+            </Col>
+            <Col span={3}>
+              <div
+                onClick={() => {
+                  Cookies.set("headerTheme", "dark");
+                  return headerThemeAction("dark");
+                }}
+                style={{
+                  backgroundColor: "#001529",
+                  width: 20,
+                  height: 20,
+                  border: "solid",
+                  cursor: "pointer",
+                  cursor: "pointer",
+                  borderRadius: 3
+                }}
+              />
+            </Col>
+          </Row>
+        </div>
+      </Modal>
     </div>
   ); // end Return
 }; // end App

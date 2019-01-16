@@ -4,7 +4,7 @@ const types = keyMirror({
   COLLAPSED: null,
   SOMEDISPATCH: null,
   HEADERTHEME: null,
-  RIGHTTHEME: null,
+  RIGHTACTION: null,
   LEFTTHEME: null
 }); // end types
 

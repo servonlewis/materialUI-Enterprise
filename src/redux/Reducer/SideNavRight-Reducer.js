@@ -1,15 +1,15 @@
 import types from "../Actions/Types";
 
 const defaultState = {
-  theme: "light"
+  theme: false
 };
 
 const sideNavRightReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case types.RIGHTTHEME:
+    case types.RIGHTACTION:
       return {
         ...state,
-        theme: action.data.color
+        theme: action.data
       }; // end return
 
     default:
