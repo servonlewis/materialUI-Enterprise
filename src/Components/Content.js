@@ -1,10 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import * as actions from "../redux/Actions/Content-Actions";
-import { Map, List, fromJS } from "immutable";
+import React from "react";
 import "antd/dist/antd.css";
-import { Layout, Menu, Breadcrumb, Row, Col, Card, Icon, Avatar } from "antd";
-import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from "constants";
+import "antd-mobile/dist/antd-mobile.css";
+import { Layout, Menu, Breadcrumb, Row, Col, Card } from "antd";
 
 const MidContent = props => {
   const { Header, Content, Footer } = Layout;
@@ -24,24 +21,22 @@ const ContentMain = props => {
     <div>
       <Row justify="space-around" type="flex">
         <Col span={24} accessKey>
-          <Breadcrumb>
+          <Breadcrumb style={{ textShadow: "1px 1px  white" }}>
             <Breadcrumb.Item>Dms</Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <a href="">Main</a>
-            </Breadcrumb.Item>
+            <Breadcrumb.Item>Main</Breadcrumb.Item>
           </Breadcrumb>
         </Col>
       </Row>
       <Row align="middle" type="flex">
-        <Col span={24} offset={11}>
+        <Col span={24}>
           <Card
-            style={{ width: 175, borderRadius: 10 }}
+            style={{
+              width: "8%",
+              borderRadius: 10,
+              marginLeft: "46%"
+            }}
             cover={
-              <img
-                alt="userPic"
-                src="http://iphoto.nb.com/20006408.jpeg"
-                style={{ height: 125, borderRadius: 10 }}
-              />
+              <img alt="userPic" src="http://iphoto.nb.com/20006408.jpeg" />
             }
           >
             <Meta title="Servon Lewis" description="ITSM Engineering" />

@@ -5,7 +5,12 @@ const types = keyMirror({
   SOMEDISPATCH: null,
   HEADERTHEME: null,
   RIGHTACTION: null,
-  LEFTTHEME: null
+  LEFTTHEME: null,
+  CONTENTTHEME: null,
+  MOBILEMODAL: null,
+  MOBILELEFTMENU: null,
+  MOBILEAVATARMENU: null,
+  MOBILETABBARSELECT: null
 }); // end types
 
 export default types;

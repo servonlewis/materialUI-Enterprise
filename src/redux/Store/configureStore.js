@@ -5,6 +5,7 @@ import rootReducer from "../Reducer/combined";
 import history from "./history";
 import { connectRouter, routerMiddleware } from "connected-react-router";
 import createSagaMiddleware from "redux-saga";
+import { initSagas } from "../Sagas/InitSagas";
 
 const logger = createLogger({
   collapsed: true
@@ -20,6 +21,6 @@ export default preloadedState => {
       applyMiddleware(routerMiddleware(history), sagaMiddleware, thunk, logger)
     )
   );
-
+  initSagas(sagaMiddleware);
   return store;
 };

@@ -58,3 +58,11 @@
 .ant-menu-submenu-popup.ant-menu-dark .ant-menu-item-selected {
   background-color: #13c2c2;
 }
+
+.ant-modal-header {
+  background-color: #123a5f;
+}
+
+.ant-modal-close {
+  color: #fff;
+}

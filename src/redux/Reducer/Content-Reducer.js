@@ -1,22 +1,18 @@
 import types from "../Actions/Types";
 
-const defaultState = {};
+const defaultState = {
+  theme: "#f0f2f5"
+};
 
 const contentReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case types.TEMPLATE_TEST:
+    case types.CONTENTTHEME:
       return {
         ...state,
-        data: action.data.data
+        theme: action.data
       }; // end return
-    case types.SOMEDISPATCH:
-      return {
-        ...state,
-        data: action.data.event
-      };
     default:
       return { ...state };
-      break;
   } // end switch
 }; // end reducer
 

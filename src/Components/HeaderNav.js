@@ -1,19 +1,14 @@
 import React from "react";
-import { Map, List, fromJS } from "immutable";
 import "antd/dist/antd.css";
-import { Layout, Menu, Breadcrumb, Icon, Input, Radio, Avatar } from "antd";
+import "antd-mobile/dist/antd-mobile.css";
+import { Menu, Icon, Input, Radio, Avatar } from "antd";
 import Cookies from "js-cookie";
-import {
-  BrowserView,
-  MobileView,
-  isBrowser,
-  isMobile
-} from "react-device-detect";
+
 const HeaderNav = props => {
   const { Item, SubMenu } = Menu;
   const { Search } = Input;
   const RadioGroup = Radio.Group;
-  const { headerTheme, rightThemeAction, rightNavTheme } = props;
+  const { rightThemeAction, rightNavTheme } = props;
   return (
     <Menu
       mode="horizontal"

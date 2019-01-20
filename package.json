@@ -5,6 +5,7 @@
   "dependencies": {
     "@trendmicro/react-sidenav": "^0.4.5",
     "antd": "^3.11.6",
+    "antd-mobile": "^2.2.8",
     "bootstrap": "^4.2.1",
     "connected-react-router": "^6.1.0",
     "immutable": "^4.0.0-rc.12",

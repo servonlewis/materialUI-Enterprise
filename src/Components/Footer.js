@@ -1,9 +1,9 @@
 import React from "react";
 import "antd/dist/antd.css";
-
+import "antd-mobile/dist/antd-mobile.css";
 export default props => {
   return (
-    <div style={{ textAlign: "center" }}>
+    <div style={{ marginLeft: "50%" }}>
       <b>Neuberger Berman IT - Author Servon Lewis @2019</b>
     </div>
   );

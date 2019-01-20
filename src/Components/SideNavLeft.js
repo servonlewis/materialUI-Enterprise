@@ -1,7 +1,7 @@
 import React from "react";
-import { Map, List, fromJS } from "immutable";
 import "antd/dist/antd.css";
-import { Menu, Icon, Switch, Modal } from "antd";
+import "antd-mobile/dist/antd-mobile.css";
+import { Menu, Icon } from "antd";
 import Cookies from "js-cookie";
 
 const SideNavLeft = props => {
@@ -16,7 +16,7 @@ const SideNavLeft = props => {
             Cookies.get("leftTheme") ? Cookies.get("leftTheme") : sideNavLeft
           }
         >
-          <Menu.Item title="Home" key="1" style={{}}>
+          <Menu.Item title="Home" key="1">
             <Icon
               type="frown"
               theme="twoTone"
