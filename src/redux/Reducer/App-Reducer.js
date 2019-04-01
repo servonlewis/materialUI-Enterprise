@@ -1,23 +1,26 @@
 import types from "../Actions/Types";
 
-const defaultState = {
-  collapsed: false,
-  event: "",
-  config: {
-    "force new connection": true,
-    reconnectionAttempts: "Infinity",
-    timeout: 10000,
-    transports: ["websocket"]
-  },
-  endpoint: "IPADDRESS:4000"
-};
+const defaultState = { mobileOpen: false, navValue: 0, AllUsers: [{}] };
 
 const appReducer = (state = defaultState, action) => {
   switch (action.type) {
     case types.COLLAPSED:
-      return { ...state, collapsed: action.data.collapsed }; // end return
-    case types.SOMEDISPATCH:
-      return { ...state, data: action.data.event };
+      return {
+        ...state,
+        mobileOpen: action.data.collapsed
+      }; // end return
+
+    case types.NAV_VALUE:
+      return {
+        ...state,
+        navValue: action.value
+      }; // end return
+
+    case types.SET_ALL_USERS:
+      return {
+        ...state,
+        AllUsers: action.AllUsers
+      }; // end return
     default:
       return { ...state };
   } // end switch

@@ -1,3 +1,4 @@
+import "react-app-polyfill/ie9";
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
@@ -12,7 +13,6 @@ import "antd/dist/antd.css";
 import "./Settings/App.css";
 
 const store = configureStore();
-
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>

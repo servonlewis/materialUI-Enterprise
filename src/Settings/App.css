@@ -66,3 +66,32 @@
 .ant-modal-close {
   color: #fff;
 }
+#inputLable:hover {
+  outline: 1px dotted #000;
+  font-size: 1.25;
+  font-weight: 700;
+}
+
+#inputLable {
+  display: inline-block;
+  font-family: calibri;
+  width: 150px;
+  padding: 10px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border: 0.5px solid #bbb;
+  text-align: center;
+  background-color: #d9534f;
+  cursor: pointer;
+  color: white;
+}
+
+/* .tablestuff {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 33.33%);
+  grid-template-rows: repeat(auto-fill, 100%);
+  grid-column-start: 1;
+  grid-column-end: 4;
+}
+ */

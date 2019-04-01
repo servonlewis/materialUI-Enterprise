@@ -1,171 +1,99 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../redux/Actions/App-Actions";
-import * as contentActions from "../redux/Actions/Content-Actions";
-import * as headerActions from "../redux/Actions/HeaderNav-Actions";
-import * as leftActions from "../redux/Actions/SideNavLeft-Actions";
-import * as rightActions from "../redux/Actions/SideNavRight-Actions";
-import MobileParent from "../Mobile Components/TabBar";
-import MidContent from "../Components/Content";
-import HeaderNav from "../Components/HeaderNav";
-import SideNavLeft from "../Components/SideNavLeft";
-import SideNavRight from "../Components/SideNavRight";
-import EndFooter from "../Components/Footer";
 import Cookies from "js-cookie";
-import { push } from "connected-react-router";
-import { BrowserView, MobileView } from "react-device-detect";
-import { Layout } from "antd";
+import "../Settings/Style";
+import PropTypes from "prop-types";
+import { MuiThemeProvider, withStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Hidden from "@material-ui/core/Hidden";
+import Navigator from "../Components/Navigator";
+import Content from "../Components/Content";
+import Header from "../Components/Header";
+import theme from "../Settings/theme";
+import darkTheme from "../Settings/themeDark";
+import styles from "../Settings/Style";
 
-class App extends Component {
-  componentDidMount() {}
+class App extends React.Component {
+  state = {
+    myTheme: darkTheme
+  };
+
+  componentDidMount() {
+    this.props.getUser();
+    if (Cookies.get("theme")) {
+      Cookies.get("theme") === "light" && this.setState({ myTheme: theme });
+    }
+  }
+
+  swapTheme = () => {
+    this.setState(prevState => ({
+      myTheme: prevState.myTheme === darkTheme ? theme : darkTheme
+    }));
+    return Cookies.set(
+      "theme",
+      this.state.myTheme === darkTheme ? "light" : "dark"
+    );
+  };
 
   render() {
-    const { Header, Sider, Content, Footer } = Layout;
-    const {
-      collapsed,
-      sideNavLeft,
-      headerTheme,
-      rightNavTheme,
-      collapseMe,
-      headerThemeAction,
-      leftThemeAction,
-      rightThemeAction,
-      contentThemeAction,
-      getMobileModal,
-      mobileModal,
-      mobileLeftMenu,
-      getmobileLeftMenu,
-      mobileAvatarMenu,
-      getmobileAvatarMenu,
-      mobileTabSelect,
-      getMobileTabBarSelect
-    } = this.props;
+    const { classes, mobileOpen, collapseMe } = this.props;
+    const { myTheme } = this.state;
+
     return (
-      <div>
-        <BrowserView>
-          <Layout hasSider={true} style={{ minHeight: "100vh" }}>
-            <Sider
-              theme={Cookies.get("leftTheme")}
-              breakpoint="xl"
-              collapsible={true}
-              collapsedWidth="5em"
-              width={"20em"}
-              style={{
-                position: "fixed",
-                overflow: "scroll",
-                zIndex: 50000,
-                height: "100vh",
-                overflowY: "auto",
-                overflowX: "hidden"
-              }}
-              onCollapse={collapsed => collapseMe(collapsed)}
-            >
-              <SideNavLeft
-                collapsed={collapsed}
-                sideNavLeft={sideNavLeft}
-                push={push}
+      <MuiThemeProvider theme={myTheme}>
+        <CssBaseline />
+        <div className={classes.root}>
+          <nav className={classes.drawer}>
+            <Hidden mdUp implementation="js">
+              <Navigator
+                PaperProps={{ style: { width: 256 } }}
+                variant="temporary"
+                open={mobileOpen}
+                onClose={() => collapseMe(mobileOpen)}
+                {...this.props}
               />
-            </Sider>
-            <Layout>
-              <Header
-                style={{
-                  backgroundColor:
-                    Cookies.get("headerTheme") === "dark"
-                      ? "#001529"
-                      : Cookies.get("headerTheme") === "light"
-                      ? "#fff"
-                      : "#fff",
-                  position: "fixed",
-                  overflow: "hidden",
-                  zIndex: 5,
-                  width: "100%"
-                }}
-              >
-                <HeaderNav
-                  headerTheme={headerTheme}
-                  rightThemeAction={rightThemeAction}
-                  rightNavTheme={rightNavTheme}
-                />
-              </Header>
-              <Content
-                style={{
-                  zIndex: 0,
-                  marginLeft: collapsed ? "5em" : "20em",
-                  marginTop: "4.6em",
-                  transition: ".3s",
-                  backgroundColor: Cookies.get("contentTheme")
-                }}
-              >
-                <MidContent />
-              </Content>
-
-              <Footer
-                style={{
-                  backgroundColor: Cookies.get("contentTheme"),
-                  color: "white",
-                  textShadow: "2px 1px 2px black"
-                }}
-              >
-                <EndFooter />
-              </Footer>
-            </Layout>
-
-            <SideNavRight
-              rightNavTheme={rightNavTheme}
-              sideNavLeft={sideNavLeft}
-              headerTheme={headerTheme}
-              headerThemeAction={headerThemeAction}
-              leftThemeAction={leftThemeAction}
-              rightThemeAction={rightThemeAction}
-              contentThemeAction={contentThemeAction}
+            </Hidden>
+            <Hidden smDown implementation="css">
+              <Navigator PaperProps={{ style: { width: 256 } }} />
+            </Hidden>
+          </nav>
+          <div className={classes.appContent}>
+            <Header
+              {...this.props}
+              {...this.state}
+              {...this}
+              onDrawerToggle={() => collapseMe(mobileOpen)}
             />
-          </Layout>
-        </BrowserView>
+            <main className={classes.mainContent}>
+              <Content {...this.props} />
+            </main>
+          </div>
+        </div>
+      </MuiThemeProvider>
+    );
+  }
+}
 
-        <MobileView>
-          <MobileParent
-            mobileModal={mobileModal}
-            getMobileModal={getMobileModal}
-            mobileLeftMenu={mobileLeftMenu}
-            getmobileLeftMenu={getmobileLeftMenu}
-            mobileAvatarMenu={mobileAvatarMenu}
-            getmobileAvatarMenu={getmobileAvatarMenu}
-            mobileTabSelect={mobileTabSelect}
-            getMobileTabBarSelect={getMobileTabBarSelect}
-          />
-        </MobileView>
-      </div>
-    ); // end Return
-  } // end Render
-} // end App
+App.propTypes = {
+  classes: PropTypes.object.isRequired,
+  mobileOpen: PropTypes.bool.isRequired,
+  collapseMe: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
-  collapsed: state.appReducer.collapsed,
-  event: state.appReducer.event,
-  config: state.appReducer.config,
-  endpoint: state.appReducer.endpoint,
-  sideNavLeft: state.sideNavLeft.theme,
-  headerTheme: state.headerNav.theme,
-  rightNavTheme: state.sideNavRight.theme,
-  contentTheme: state.contentReducer.theme,
-  mobileModal: state.headerNav.mobileModal,
-  mobileLeftMenu: state.headerNav.mobileLeftMenu,
-  mobileAvatarMenu: state.headerNav.mobileAvatarMenu,
-  mobileTabSelect: state.headerNav.mobileTabSelect
+  authenticated: state.appReducer.authenticated,
+  mobileOpen: state.appReducer.mobileOpen,
+  navValue: state.appReducer.navValue,
+  AllUsers: state.appReducer.AllUsers
 });
 const mapDispatchToProps = dispatch => ({
-  collapseMe: collapsed => dispatch(actions.collapseMe(collapsed)),
-  headerThemeAction: color => dispatch(headerActions.theme(color)),
-  leftThemeAction: color => dispatch(leftActions.theme(color)),
-  rightThemeAction: color => dispatch(rightActions.theme(color)),
-  contentThemeAction: color => dispatch(contentActions.theme(color)),
-  getMobileModal: data => dispatch(headerActions.mobileModal(data)),
-  getmobileLeftMenu: data => dispatch(headerActions.mobileLeftMenu(data)),
-  getmobileAvatarMenu: data => dispatch(headerActions.mobileAvatarMenu(data)),
-  getMobileTabBarSelect: data =>
-    dispatch(headerActions.mobileTabBarSelect(data))
+  getUser: data => dispatch({ type: "GET_USERS", data }),
+  collapseMe: data => dispatch(actions.collapseMe(data)),
+  getNavValue: data => dispatch(actions.headerNavBarValueChange(data))
 });
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(App);
+)(withStyles(styles)(App));
