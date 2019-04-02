@@ -22,7 +22,9 @@ export default {
   appContent: {
     flex: 1,
     display: "flex",
-    marginLeft: isBrowser && "256px",
+    [theme.breakpoints.up("md")]: {
+      marginLeft: "256px"
+    },
     minHeight: "100vh",
     flexDirection: "column"
   },
