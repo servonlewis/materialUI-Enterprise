@@ -1,5 +1,3 @@
-import { BrowserView, MobileView, isBrowser } from "react-device-detect";
-
 export const allUserColumns = [
   /*     {
       name: "id",

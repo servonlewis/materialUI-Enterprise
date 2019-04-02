@@ -85,7 +85,10 @@ function* knowBe4Users() {
         custom_field_2: x.custom_field_2 */
       }));
 
-      console.log("Knowbe4 Errors: ", payload.errors);
+      console.log(
+        "Knowbe4 Websocket: 'KnowBe4UserData' Errors: ",
+        payload.errors
+      );
       yield put({
         type: types.SET_ALL_USERS,
         AllUsers: payload.success,

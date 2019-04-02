@@ -80,14 +80,14 @@ class Content extends PureComponent {
                   </Grid>
                   <Grid item>
                     <Tooltip title="Search">
-                      <Fab color="secondary" aria-label="search" size="small">
+                      <IconButton color="secondary">
                         <SearchIcon className={classes.block} color="inherit" />
-                      </Fab>
+                      </IconButton>
                     </Tooltip>
                   </Grid>
                   <Grid item>
                     <Tooltip title="Reload">
-                      <IconButton>
+                      <IconButton color="secondary">
                         <RefreshIcon
                           className={classes.block}
                           color="inherit"

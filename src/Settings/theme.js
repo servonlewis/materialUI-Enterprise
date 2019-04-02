@@ -15,10 +15,16 @@ let theme = createMuiTheme({
     }
   },
   palette: {
+    background: {
+      default: "#eaeff1"
+    },
     primary: {
       light: "#63ccff",
       main: "#009be5",
       dark: "#006db3"
+    },
+    secondary: {
+      main: "#009be5"
     }
   },
   shape: {
