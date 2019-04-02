@@ -13,6 +13,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { withStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import MUIDataTable from "mui-datatables";
 import Input from "@material-ui/core/Input";
 import { allUserColumns } from "../constants/tableData";
@@ -47,11 +48,14 @@ const styles = theme => ({
     marginTop: 15,
     overflow: "auto"
   }
+  /*  progress: {
+    margin: theme.spacing.unit * 2
+  } */
 });
 
 class Content extends PureComponent {
   render() {
-    const { classes, navValue, getNavValue, AllUsers } = this.props;
+    const { classes, navValue, getNavValue, allUserData } = this.props;
     return (
       <Fragment>
         <Grid>
@@ -96,81 +100,70 @@ class Content extends PureComponent {
             </AppBar>
           </Paper>
         </Grid>
-        {navValue === 0 ? <StyledUserSplash {...this.props} /> : null}
+        {navValue === 0 ? <StyledUserSplash allUserData={allUserData} /> : null}
       </Fragment>
     );
   }
 }
 
-const UserSplash = ({ classes, AllUsers }) => {
-  const allUserData =
-    AllUsers &&
-    AllUsers.map(x => ({
-      id: x.id,
-      employee_number: x.employee_number,
-      first_name: x.first_name,
-      last_name: x.last_name,
-      job_title: x.job_title,
-      email: x.email,
-      phish_prone_percentage: x.phish_prone_percentage,
-      phone_number: x.phone_number,
-      extension: x.extension,
-      mobile_phone_number: x.mobile_phone_number,
-      location: x.location,
-      division: x.division,
-      manager_name: x.manager_name,
-      manager_email: x.manager_email,
-      groups: x.groups,
-      adi_manageable: x.adi_manageable,
-      joined_on: x.joined_on,
-      last_sign_in: x.last_sign_in,
-      status: x.status,
-      employee_start_date: x.employee_start_date,
-      archived_at: x.archived_at,
-      custom_field_1: x.custom_field_1,
-      custom_field_2: x.custom_field_2
-    }));
+class UserSplash extends PureComponent {
+  state = {};
 
-  const options = {
-    filterType: "checkbox",
-    responsive: "scroll",
-    print: false,
-    rowsPerPage: 25,
-    rowsPerPageOptions: [10, 25, 50, 100],
-    downloadOptions: { filename: "NoBe4_Users.csv" }
-  };
+  componentDidMount() {
+    this.setState({
+      options: {
+        filterType: "checkbox",
+        responsive: "scroll",
+        print: false,
+        rowsPerPage: 25,
+        rowsPerPageOptions: [10, 25, 50, 100],
+        downloadOptions: { filename: "NoBe4_Users.csv" }
+      }
+    });
+  }
 
-  return (
-    <Fragment>
-      <Grid container spacing={16} justify="center">
-        <Grid item xs={4}>
-          <Paper className={classes.paperTest}>
-            <Typography variant="headline">hello world 1</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paperTest}>
-            <Typography variant="headline">hello world 2</Typography>
-          </Paper>
-        </Grid>
-      </Grid>
-      <Grid container>
-        {AllUsers ? (
-          <Grid container>
-            <Paper className={classes.tableDiv}>
-              <MUIDataTable
-                title={"All Users"}
-                data={allUserData}
-                columns={allUserColumns}
-                options={options}
-              />
+  render() {
+    const { classes, allUserData } = this.props;
+
+    return (
+      <Fragment>
+        <Grid container spacing={16} justify="center">
+          <Grid item xs={4}>
+            <Paper className={classes.paperTest}>
+              <Typography variant="headline">hello world 1</Typography>
             </Paper>
           </Grid>
-        ) : null}
-      </Grid>
-    </Fragment>
-  );
-};
+          <Grid item xs={6}>
+            <Paper className={classes.paperTest}>
+              <Typography variant="headline">hello world 2</Typography>
+            </Paper>
+          </Grid>
+        </Grid>
+        <Grid container>
+          {allUserData ? (
+            <Grid container>
+              <Paper className={classes.tableDiv}>
+                <MUIDataTable
+                  title={"All Users"}
+                  data={allUserData}
+                  columns={allUserColumns}
+                  options={this.state.options}
+                />
+              </Paper>
+            </Grid>
+          ) : (
+            <Grid xs={12} container justify="center">
+              <CircularProgress
+                className={classes.tableDiv}
+                color="secondary"
+              />
+            </Grid>
+          )}
+        </Grid>
+      </Fragment>
+    );
+  }
+}
 
 Content.propTypes = {
   classes: PropTypes.object.isRequired,

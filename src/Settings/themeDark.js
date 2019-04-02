@@ -30,7 +30,7 @@ let theme = createMuiTheme({
   }
 });
 
-export default (theme = {
+export default {
   ...theme,
   overrides: {
     MuiDrawer: {
@@ -129,4 +129,4 @@ export default (theme = {
       minHeight: 48
     }
   }
-});
+};

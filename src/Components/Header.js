@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, PureComponent } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Avatar from "@material-ui/core/Avatar";
@@ -40,108 +40,113 @@ const styles = theme => ({
   }
 });
 
-const Header = ({
-  classes,
-  onDrawerToggle,
-  navValue,
-  getNavValue,
-  swapTheme,
-  ...other
-}) => {
-  return (
-    <Fragment>
-      <AppBar
-        color="primary"
-        position="sticky"
-        elevation={0}
-        className={classes.AppBar}
-      >
-        <Toolbar>
-          <Grid container spacing={8} alignItems="center">
-            <Hidden mdUp>
+class Header extends PureComponent {
+  render() {
+    const {
+      classes,
+      onDrawerToggle,
+      navValue,
+      getNavValue,
+      swapTheme,
+      ...other
+    } = this.props;
+    return (
+      <Fragment>
+        <AppBar
+          color="primary"
+          position="sticky"
+          elevation={0}
+          className={classes.AppBar}
+        >
+          <Toolbar>
+            <Grid container spacing={8} alignItems="center">
+              <Hidden mdUp>
+                <Grid item>
+                  <IconButton
+                    color="inherit"
+                    aria-label="Open drawer"
+                    onClick={onDrawerToggle}
+                    className={classes.menuButton}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                </Grid>
+              </Hidden>
+              <Grid item xs />
+              <Grid item>
+                <Tooltip title="Go to some Api or something like that">
+                  <Typography className={classes.link} component="a" href="#">
+                    Go to Link
+                  </Typography>
+                </Tooltip>
+              </Grid>
+              <Grid item>
+                <Tooltip title="Alerts • No alters">
+                  <IconButton color="inherit">
+                    <NotificationsIcon />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
               <Grid item>
                 <IconButton
                   color="inherit"
-                  aria-label="Open drawer"
-                  onClick={onDrawerToggle}
-                  className={classes.menuButton}
+                  className={classes.iconButtonAvatar}
                 >
-                  <MenuIcon />
+                  <Avatar
+                    className={classes.avatar}
+                    src="http://iphoto.nb.com/20006408.jpeg"
+                  />
                 </IconButton>
               </Grid>
-            </Hidden>
-            <Grid item xs />
-            <Grid item>
-              <Tooltip title="Go to some Api or something like that">
-                <Typography className={classes.link} component="a" href="#">
-                  Go to Link
-                </Typography>
-              </Tooltip>
             </Grid>
-            <Grid item>
-              <Tooltip title="Alerts • No alters">
-                <IconButton color="inherit">
-                  <NotificationsIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-            <Grid item>
-              <IconButton color="inherit" className={classes.iconButtonAvatar}>
-                <Avatar
-                  className={classes.avatar}
-                  src="http://iphoto.nb.com/20006408.jpeg"
-                />
-              </IconButton>
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
-      <AppBar
-        component="div"
-        className={classes.secondaryBar}
-        color="primary"
-        position="static"
-        elevation={0}
-      >
-        <Toolbar>
-          <Grid container alignItems="center" spacing={8}>
-            <Grid item xs>
-              <Typography color="inherit" variant="h5">
-                My Dashboard Name
-              </Typography>
-            </Grid>
-
-            <Grid item>
-              <Tooltip title="Toggle light or dark mode">
-                <IconButton color="inherit" onClick={() => swapTheme()}>
-                  <WbIncandescent />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
-      <AppBar
-        component="div"
-        className={classes.secondaryBar}
-        color="primary"
-        position="static"
-        elevation={0}
-      >
-        <Tabs
-          value={navValue}
-          textColor="inherit"
-          onChange={(e, v) => getNavValue(v)}
+          </Toolbar>
+        </AppBar>
+        <AppBar
+          component="div"
+          className={classes.secondaryBar}
+          color="primary"
+          position="static"
+          elevation={0}
         >
-          <Tab textColor="inherit" label="Users" />
-          <Tab textColor="inherit" label="Groups" />
-          <Tab textColor="inherit" label="Phishing Campaigns" />
-        </Tabs>
-      </AppBar>
-    </Fragment>
-  );
-};
+          <Toolbar>
+            <Grid container alignItems="center" spacing={8}>
+              <Grid item xs>
+                <Typography color="inherit" variant="h5">
+                  My Dashboard Name
+                </Typography>
+              </Grid>
 
+              <Grid item>
+                <Tooltip title="Toggle light or dark mode">
+                  <IconButton color="inherit" onClick={() => swapTheme()}>
+                    <WbIncandescent />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
+        <AppBar
+          component="div"
+          className={classes.secondaryBar}
+          color="primary"
+          position="static"
+          elevation={0}
+        >
+          <Tabs
+            value={navValue}
+            textColor="inherit"
+            onChange={(e, v) => getNavValue(v)}
+          >
+            <Tab textColor="inherit" label="Users" />
+            <Tab textColor="inherit" label="Groups" />
+            <Tab textColor="inherit" label="Phishing Campaigns" />
+          </Tabs>
+        </AppBar>
+      </Fragment>
+    );
+  }
+}
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
   onDrawerToggle: PropTypes.func.isRequired,

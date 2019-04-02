@@ -41,7 +41,7 @@ export const allUserColumns = [
       sort: true
     }
   }, */,
-  isBrowser && {
+  {
     name: "email",
     label: "Email",
     options: {
@@ -49,7 +49,7 @@ export const allUserColumns = [
       sort: true
     }
   },
-  isBrowser && {
+  {
     name: "phish_prone_percentage",
     label: "Phish Prone Percentage",
     options: {
@@ -106,7 +106,7 @@ export const allUserColumns = [
         sort: true
       }
     } */
-  isBrowser && {
+  {
     name: "manager_email",
     label: "Manager Email",
     options: {

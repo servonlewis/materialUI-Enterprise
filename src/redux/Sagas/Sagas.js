@@ -58,11 +58,38 @@ function* knowBe4Users() {
 
       // then put the new data into the reducer
       const payload = yield take(socketChannel);
-      console.log(payload.success);
+
+      const allUserData = yield payload.success.map(x => ({
+        //id: x.id,
+        // employee_number: x.employee_number,
+        first_name: x.first_name,
+        last_name: x.last_name,
+        //  job_title: x.job_title,
+        email: x.email,
+        phish_prone_percentage: x.phish_prone_percentage,
+        /*  phone_number: x.phone_number,
+        extension: x.extension,
+        mobile_phone_number: x.mobile_phone_number,
+        location: x.location,
+        division: x.division,
+        manager_name: x.manager_name, */
+        manager_email: x.manager_email,
+        groups: x.groups
+        /*    adi_manageable: x.adi_manageable,
+        joined_on: x.joined_on,
+        last_sign_in: x.last_sign_in,
+        status: x.status,
+        employee_start_date: x.employee_start_date,
+        archived_at: x.archived_at,
+        custom_field_1: x.custom_field_1,
+        custom_field_2: x.custom_field_2 */
+      }));
+
       console.log("Knowbe4 Errors: ", payload.errors);
       yield put({
         type: types.SET_ALL_USERS,
-        AllUsers: payload.success
+        AllUsers: payload.success,
+        allUserData: allUserData
       });
     } catch (err) {
       console.log(err);

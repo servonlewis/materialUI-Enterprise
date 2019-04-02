@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import * as actions from "../redux/Actions/App-Actions";
 import Cookies from "js-cookie";
@@ -14,7 +14,7 @@ import theme from "../Settings/theme";
 import darkTheme from "../Settings/themeDark";
 import styles from "../Settings/Style";
 
-class App extends React.Component {
+class App extends PureComponent {
   state = {
     myTheme: darkTheme
   };
@@ -37,9 +37,18 @@ class App extends React.Component {
   };
 
   render() {
-    const { classes, mobileOpen, collapseMe } = this.props;
+    const {
+      classes,
+      mobileOpen,
+      collapseMe,
+      onDrawerToggle,
+      navValue,
+      getNavValue,
+      AllUsers,
+      allUserData
+    } = this.props;
     const { myTheme } = this.state;
-
+    const { swapTheme } = this;
     return (
       <MuiThemeProvider theme={myTheme}>
         <CssBaseline />
@@ -51,7 +60,6 @@ class App extends React.Component {
                 variant="temporary"
                 open={mobileOpen}
                 onClose={() => collapseMe(mobileOpen)}
-                {...this.props}
               />
             </Hidden>
             <Hidden smDown implementation="css">
@@ -60,13 +68,19 @@ class App extends React.Component {
           </nav>
           <div className={classes.appContent}>
             <Header
-              {...this.props}
-              {...this.state}
-              {...this}
+              onDrawerToggle={onDrawerToggle}
+              navValue={navValue}
+              getNavValue={getNavValue}
+              swapTheme={swapTheme}
               onDrawerToggle={() => collapseMe(mobileOpen)}
             />
             <main className={classes.mainContent}>
-              <Content {...this.props} />
+              <Content
+                navValue={navValue}
+                getNavValue={getNavValue}
+                AllUsers={AllUsers}
+                allUserData={allUserData}
+              />
             </main>
           </div>
         </div>
@@ -85,7 +99,8 @@ const mapStateToProps = state => ({
   authenticated: state.appReducer.authenticated,
   mobileOpen: state.appReducer.mobileOpen,
   navValue: state.appReducer.navValue,
-  AllUsers: state.appReducer.AllUsers
+  AllUsers: state.appReducer.AllUsers,
+  allUserData: state.appReducer.allUserData
 });
 const mapDispatchToProps = dispatch => ({
   getUser: data => dispatch({ type: "GET_USERS", data }),

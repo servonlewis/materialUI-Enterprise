@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PureComponent, Fragment } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
@@ -86,73 +86,75 @@ const styles = theme => ({
   }
 });
 
-const Navigator = props => {
-  const { classes, ...other } = props;
+class Navigator extends PureComponent {
+  render() {
+    const { classes, ...other } = this.props;
 
-  return (
-    <Drawer variant="permanent" {...other}>
-      <List disablePadding>
-        <ListItem
-          className={classNames(
-            classes.firebase,
-            classes.item,
-            classes.itemCategory
-          )}
-        >
-          My App Name
-        </ListItem>
-        <ListItem className={classNames(classes.item, classes.itemCategory)}>
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText
-            classes={{
-              primary: classes.itemPrimary
-            }}
+    return (
+      <Drawer variant="permanent" {...other}>
+        <List disablePadding>
+          <ListItem
+            className={classNames(
+              classes.firebase,
+              classes.item,
+              classes.itemCategory
+            )}
           >
-            Project Overview
-          </ListItemText>
-        </ListItem>
-        {categories.map(({ id, children }) => (
-          <React.Fragment key={id}>
-            <ListItem className={classes.categoryHeader}>
-              <ListItemText
-                classes={{
-                  primary: classes.categoryHeaderPrimary
-                }}
-              >
-                {id}
-              </ListItemText>
-            </ListItem>
-            {children.map(({ id: childId, icon, active }) => (
-              <ListItem
-                button
-                dense
-                key={childId}
-                className={classNames(
-                  classes.item,
-                  classes.itemActionable,
-                  active && classes.itemActiveItem
-                )}
-              >
-                <ListItemIcon>{icon}</ListItemIcon>
+            My App Name
+          </ListItem>
+          <ListItem className={classNames(classes.item, classes.itemCategory)}>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText
+              classes={{
+                primary: classes.itemPrimary
+              }}
+            >
+              Project Overview
+            </ListItemText>
+          </ListItem>
+          {categories.map(({ id, children }) => (
+            <React.Fragment key={id}>
+              <ListItem className={classes.categoryHeader}>
                 <ListItemText
                   classes={{
-                    primary: classes.itemPrimary,
-                    textDense: classes.textDense
+                    primary: classes.categoryHeaderPrimary
                   }}
                 >
-                  {childId}
+                  {id}
                 </ListItemText>
               </ListItem>
-            ))}
-            <Divider className={classes.divider} />
-          </React.Fragment>
-        ))}
-      </List>
-    </Drawer>
-  );
-};
+              {children.map(({ id: childId, icon, active }) => (
+                <ListItem
+                  button
+                  dense
+                  key={childId}
+                  className={classNames(
+                    classes.item,
+                    classes.itemActionable,
+                    active && classes.itemActiveItem
+                  )}
+                >
+                  <ListItemIcon>{icon}</ListItemIcon>
+                  <ListItemText
+                    classes={{
+                      primary: classes.itemPrimary,
+                      textDense: classes.textDense
+                    }}
+                  >
+                    {childId}
+                  </ListItemText>
+                </ListItem>
+              ))}
+              <Divider className={classes.divider} />
+            </React.Fragment>
+          ))}
+        </List>
+      </Drawer>
+    );
+  }
+}
 
 Navigator.propTypes = {
   classes: PropTypes.object.isRequired

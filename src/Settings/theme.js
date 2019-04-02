@@ -26,7 +26,7 @@ let theme = createMuiTheme({
   }
 });
 
-theme = {
+const themes = {
   ...theme,
   overrides: {
     MuiDrawer: {
@@ -127,4 +127,4 @@ theme = {
   }
 };
 
-export default theme;
+export default themes;

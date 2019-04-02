@@ -1,6 +1,6 @@
 import types from "../Actions/Types";
 
-const defaultState = { mobileOpen: false, navValue: 0, AllUsers: [{}] };
+const defaultState = { mobileOpen: false, navValue: 0 };
 
 const appReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -19,7 +19,8 @@ const appReducer = (state = defaultState, action) => {
     case types.SET_ALL_USERS:
       return {
         ...state,
-        AllUsers: action.AllUsers
+        AllUsers: action.AllUsers,
+        allUserData: action.allUserData
       }; // end return
     default:
       return { ...state };
