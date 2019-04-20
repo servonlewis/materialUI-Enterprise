@@ -4,7 +4,7 @@ import AppBar from '@material-ui/core/AppBar'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
-import WbIncandescent from '@material-ui/icons/WbIncandescent'
+import InvertColorsIcon from '@material-ui/icons/InvertColors'
 import Hidden from '@material-ui/core/Hidden'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
@@ -147,7 +147,7 @@ class Header extends PureComponent {
               <Grid item>
                 <Tooltip title='Toggle light or dark mode'>
                   <IconButton color='inherit' onClick={() => swapTheme()}>
-                    <WbIncandescent />
+                    <InvertColorsIcon />
                   </IconButton>
                 </Tooltip>
               </Grid>
