@@ -5,7 +5,6 @@ import {
   withStyles
 } from '@material-ui/core/styles'
 import theme from './theme'
-import { isBrowser } from 'react-device-detect'
 const drawerWidth = 256
 
 export default {

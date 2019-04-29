@@ -16,8 +16,6 @@ import RefreshIcon from '@material-ui/icons/Refresh'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import MUIDataTable from 'mui-datatables'
 import Input from '@material-ui/core/Input'
-import { allUserColumns } from '../constants/tableData'
-import { BrowserView, MobileView, isBrowser } from 'react-device-detect'
 const styles = theme => ({
   paper: {
     maxWidth: 936,
