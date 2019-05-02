@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import { createLogger } from "redux-logger";
 import rootReducer from "../Reducer/combined";
 import history from "./history";
-import { connectRouter, routerMiddleware } from "connected-react-router";
+import { routerMiddleware } from "connected-react-router";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "../Sagas/Sagas";
 

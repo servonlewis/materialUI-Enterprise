@@ -6,33 +6,40 @@
     "react-scripts": "^2.1.8"
   },
   "dependencies": {
-    "auth0-js": "^9.0.0",
-    "bootstrap": "^3.3.7",
-    "react": "^16.8.6",
-    "react-bootstrap": "^0.31.2",
-    "react-dom": "^16.8.6",
-    "react-router": "^5.0.0",
-    "react-router-dom": "^5.0.0",
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
+    "@material-ui/lab": "^3.0.0-alpha.30",
+    "auth0-js": "^9.0.0",
+    "bootstrap": "^3.3.7",
     "connected-react-router": "^6.3.2",
     "js-cookie": "^2.2.0",
     "keymirror": "^0.1.1",
     "material-design-icons": "^3.0.1",
     "material-table": "^1.28.2",
     "mui-datatables": "^2.0.0-beta.59",
+    "react": "^16.8.6",
     "react-app-polyfill": "^0.2.2",
+    "react-bootstrap": "^0.31.2",
+    "react-custom-scroll": "^4.0.1",
+    "react-dom": "^16.8.6",
     "react-redux": "^6.0.1",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
+    "react-scrollbar-js": "^1.0.1",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.0.2",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "simplebar": "^4.0.0-alpha.6",
+    "simplebar-react": "^1.0.0-alpha.6"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "aws s3 sync build/ s3://nb-shdsvcnpd-itsm-servonst",
+    "render": "react-scripts build && aws s3 sync build/ s3://nb-shdsvcnpd-itsm-servonst"
   },
   "eslintConfig": {
     "extends": "react-app"

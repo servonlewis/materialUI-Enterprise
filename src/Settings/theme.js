@@ -1,9 +1,5 @@
-import '../Settings/Style'
-import {
-  MuiThemeProvider,
-  createMuiTheme,
-  withStyles
-} from '@material-ui/core/styles'
+import "../Settings/Style";
+import { createMuiTheme } from "@material-ui/core/styles";
 
 let theme = createMuiTheme({
   typography: {
@@ -16,44 +12,44 @@ let theme = createMuiTheme({
   },
   palette: {
     background: {
-      default: '#e1e4e8'
+      default: "#e1e4e8"
     },
     primary: {
-      light: '#63ccff',
-      main: '#09507c',
-      dark: '#006db3'
+      light: "#63ccff",
+      main: "#09507c",
+      dark: "#006db3"
     },
     secondary: {
-      main: '#009be5'
+      main: "#009be5"
     }
   },
   shape: {
     borderRadius: 8
   }
-})
+});
 
 const themes = {
   ...theme,
+
   overrides: {
     MuiDrawer: {
       paper: {
-        backgroundColor: '#18202c'
+        backgroundColor: "#18202c"
       }
     },
-
     MUIDataTableBodyRow: {
       root: {
-        '&:nth-child(odd)': { backgroundColor: '#f6f8fa' }
+        "&:nth-child(odd)": { backgroundColor: "#f6f8fa" }
       }
     },
     MuiButton: {
       label: {
-        textTransform: 'initial'
+        textTransform: "initial"
       },
       contained: {
-        boxShadow: 'none',
-        '&:active': {
-          boxShadow: 'none'
+        boxShadow: "none",
+        "&:active": {
+          boxShadow: "none"
         }
       }
     },
@@ -70,16 +66,16 @@ const themes = {
     },
     MuiTab: {
       root: {
-        textTransform: 'initial',
-        margin: '0 16px',
+        textTransform: "initial",
+        margin: "0 16px",
         minWidth: 0,
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up("md")]: {
           minWidth: 0
         }
       },
       labelContainer: {
         padding: 0,
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up("md")]: {
           padding: 0
         }
       }
@@ -96,7 +92,7 @@ const themes = {
     },
     MuiDivider: {
       root: {
-        backgroundColor: '#404854'
+        backgroundColor: "#404854"
       }
     },
     MuiListItemText: {
@@ -106,9 +102,9 @@ const themes = {
     },
     MuiListItemIcon: {
       root: {
-        color: 'inherit',
+        color: "inherit",
         marginRight: 0,
-        '& svg': {
+        "& svg": {
           fontSize: 20
         }
       }
@@ -131,6 +127,6 @@ const themes = {
       minHeight: 48
     }
   }
-}
+};
 
-export default themes
+export default themes;

@@ -1,4 +1,4 @@
-import {
+/* import {
   call,
   put,
   takeEvery,
@@ -12,8 +12,8 @@ import {
 import { me } from './selectors'
 import types from '../Actions/Types'
 import { delay, eventChannel } from 'redux-saga'
-
-export default function * rootFunction () {
+ */
+export default function* rootFunction() {
   // yield takeLatest("GET_USER", fetchCitrixDesktops);
   // yield all([knowBe4Users()])
 }

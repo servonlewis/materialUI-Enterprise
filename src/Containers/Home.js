@@ -1,51 +1,42 @@
-import React, { PureComponent } from 'react'
-import { connect } from 'react-redux'
-import * as actions from '../redux/Actions/App-Actions'
-import Cookies from 'js-cookie'
-import '../Settings/Style'
-import PropTypes from 'prop-types'
-import { MuiThemeProvider, withStyles } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Hidden from '@material-ui/core/Hidden'
-import Navigator from '../Components/Navigator'
-import Content from '../Components/Content'
-import Header from '../Components/Header'
-import theme from '../Settings/theme'
-import darkTheme from '../Settings/themeDark'
-import styles from '../Settings/Style'
-import Typography from '@material-ui/core/Typography'
-import Link from '@material-ui/core/Link'
+import React, { PureComponent } from "react";
+import { connect } from "react-redux";
+import * as actions from "../redux/Actions/App-Actions";
+import Cookies from "js-cookie";
+import "../Settings/Style";
+import PropTypes from "prop-types";
+import { MuiThemeProvider, withStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Hidden from "@material-ui/core/Hidden";
+import Navigator from "../Components/Navigator";
+import Content from "../Components/Content/homeContent";
+import Header from "../Components/Header";
+import theme from "../Settings/theme";
+import darkTheme from "../Settings/themeDark";
+import styles from "../Settings/Style";
 
 class Home extends PureComponent {
   state = {
     myTheme: theme
-  }
+  };
 
-  componentDidMount () {
-    this.props.getUser()
-    if (Cookies.get('theme')) {
-      Cookies.get('theme') === 'dark' && this.setState({ myTheme: darkTheme })
+  componentDidMount() {
+    this.props.getUser();
+    if (Cookies.get("theme")) {
+      Cookies.get("theme") === "dark" && this.setState({ myTheme: darkTheme });
     }
   }
 
   swapTheme = () => {
     this.setState(prevState => ({
       myTheme: prevState.myTheme === darkTheme ? theme : darkTheme
-    }))
+    }));
     return Cookies.set(
-      'theme',
-      this.state.myTheme === darkTheme ? 'light' : 'dark'
-    )
-  }
+      "theme",
+      this.state.myTheme === darkTheme ? "light" : "dark"
+    );
+  };
 
-  login = () => {
-    this.props.auth.login()
-  }
-
-  logout = () => {
-    this.props.auth.logout()
-  }
-  render () {
+  render() {
     const {
       classes,
       mobileOpen,
@@ -55,62 +46,48 @@ class Home extends PureComponent {
       getNavValue,
       AllUsers,
       allUserData
-    } = this.props
-    const { myTheme } = this.state
-    const { swapTheme } = this
-    const { isAuthenticated } = this.props.auth
+    } = this.props;
+    const { myTheme } = this.state;
+    const { swapTheme } = this;
     return (
-      <div className='container'>
-        {isAuthenticated() && (
-          <MuiThemeProvider theme={myTheme}>
-            <CssBaseline />
-            <div className={classes.root}>
-              <nav className={classes.drawer}>
-                <Hidden mdUp implementation='js'>
-                  <Navigator
-                    PaperProps={{ style: { width: 256 } }}
-                    variant='temporary'
-                    open={mobileOpen}
-                    onClose={() => collapseMe(mobileOpen)}
-                  />
-                </Hidden>
-                <Hidden smDown implementation='css'>
-                  <Navigator PaperProps={{ style: { width: 256 } }} />
-                </Hidden>
-              </nav>
-              <div className={classes.appContent}>
-                <Header
-                  onDrawerToggle={onDrawerToggle}
+      <div className="container">
+        <MuiThemeProvider theme={myTheme}>
+          <CssBaseline />
+          <div className={classes.root}>
+            <nav className={classes.drawer}>
+              <Hidden mdUp implementation="js">
+                <Navigator
+                  PaperProps={{ style: { width: 256 } }}
+                  variant="temporary"
+                  open={mobileOpen}
+                  onClose={() => collapseMe(mobileOpen)}
+                />
+              </Hidden>
+              <Hidden smDown implementation="css">
+                <Navigator PaperProps={{ style: { width: 256 } }} />
+              </Hidden>
+            </nav>
+            <div className={classes.appContent}>
+              <Header
+                onDrawerToggles={onDrawerToggle}
+                navValue={navValue}
+                getNavValue={getNavValue}
+                swapTheme={swapTheme}
+                onDrawerToggle={() => collapseMe(mobileOpen)}
+              />
+              <main className={classes.mainContent}>
+                <Content
                   navValue={navValue}
                   getNavValue={getNavValue}
-                  swapTheme={swapTheme}
-                  onDrawerToggle={() => collapseMe(mobileOpen)}
-                  logout={this.logout}
+                  AllUsers={AllUsers}
+                  allUserData={allUserData}
                 />
-                <main className={classes.mainContent}>
-                  <Content
-                    navValue={navValue}
-                    getNavValue={getNavValue}
-                    AllUsers={AllUsers}
-                    allUserData={allUserData}
-                  />
-                </main>
-              </div>
+              </main>
             </div>
-          </MuiThemeProvider>
-        )}
-        {!isAuthenticated() && (
-          <Typography variant='headline' gutterBottom>
-            {' '}
-            You are not logged in! Please{' '}
-            <Link style={{ cursor: 'pointer' }} onClick={this.login}>
-              Log In
-            </Link>{' '}
-            to continue.
-          </Typography>
-        )}
+          </div>
+        </MuiThemeProvider>
       </div>
-    )
+    );
   }
 }
 
@@ -118,7 +95,7 @@ Home.propTypes = {
   classes: PropTypes.object.isRequired,
   mobileOpen: PropTypes.bool.isRequired,
   collapseMe: PropTypes.func.isRequired
-}
+};
 
 const mapStateToProps = state => ({
   authenticated: state.appReducer.authenticated,
@@ -126,14 +103,14 @@ const mapStateToProps = state => ({
   navValue: state.appReducer.navValue,
   AllUsers: state.appReducer.AllUsers,
   allUserData: state.appReducer.allUserData
-})
+});
 const mapDispatchToProps = dispatch => ({
-  getUser: data => dispatch({ type: 'GET_USERS', data }),
+  getUser: data => dispatch({ type: "GET_USERS", data }),
   collapseMe: data => dispatch(actions.collapseMe(data)),
   getNavValue: data => dispatch(actions.headerNavBarValueChange(data))
-})
+});
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Home))
+)(withStyles(styles)(Home));
