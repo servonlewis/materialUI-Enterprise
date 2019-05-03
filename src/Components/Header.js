@@ -35,10 +35,8 @@ import SelectDark from "../../node_modules/react-select/dist/react-select2";
 import Paper from "@material-ui/core/Paper";
 import Chip from "@material-ui/core/Chip";
 import CancelIcon from "@material-ui/icons/Cancel";
-import { emphasize } from "@material-ui/core/styles/colorManipulator";
 import classNames from "classnames";
 import suggestions from "./AutoComplete";
-
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
 const styles = theme => ({
@@ -51,6 +49,13 @@ const styles = theme => ({
   avatar: {
     backgroundColor: blue[100],
     color: blue[600]
+  },
+  ListItemAvatar: {
+    width: "4em",
+    height: "4em",
+    margin: "auto",
+    padding: 0,
+    textAlign: "center"
   },
   iconButtonAvatar: {
     padding: 4
@@ -164,6 +169,278 @@ const styles = theme => ({
     flexGrow: 1
   }
 });
+
+class Header extends PureComponent {
+  state = {
+    open: false,
+    selectedValue: null,
+    anchorEl: null,
+
+    single: null,
+    multi: null
+  };
+
+  handleChange = value => {
+    if (value !== null || "") {
+      return (window.location = value.route);
+    }
+  };
+
+  handleClickOpen = () => {
+    this.setState({
+      open: true
+    });
+  };
+
+  handleClickOpenAlert = () => {
+    this.setState({
+      openAlert: true
+    });
+  };
+
+  handleClickOpenMessage = () => {
+    this.setState({
+      openMessage: true
+    });
+  };
+
+  handleClose = value => {
+    this.setState({ selectedValue: value, open: false });
+  };
+
+  handleCloseMessage = value => {
+    this.setState({ selectedValue: value, openMessage: false });
+  };
+
+  handleCloseAlert = value => {
+    this.setState({ selectedValue: value, openAlert: false });
+  };
+
+  handleMenuClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleMenuClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  render() {
+    const { classes, onDrawerToggle, swapTheme, themeColor } = this.props;
+    const { anchorEl } = this.state;
+    const open = Boolean(anchorEl);
+    const url = window.location.pathname;
+    const currentUrl = url.substr(url.lastIndexOf("/") + 1);
+    const Select = themeColor === "dark" ? SelectDark : SelectLight;
+    const selectStyles = {
+      input: base => ({
+        ...base,
+        color: themeColor === "dark" && "#fff",
+        "& input": {
+          font: "inherit"
+        }
+      })
+    };
+    return (
+      <Fragment>
+        <AppBar
+          color="default"
+          position="sticky"
+          elevation={0}
+          className={classes.AppBar}
+        >
+          <Toolbar>
+            <Grid container spacing={8} alignItems="center">
+              <Hidden mdUp>
+                <Grid item>
+                  <IconButton
+                    color="inherit"
+                    aria-label="Open drawer"
+                    onClick={onDrawerToggle}
+                    className={classes.menuButton}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                </Grid>
+              </Hidden>
+              <Grid item sm>
+                <Hidden smDown>
+                  <Typography color="inherit" variant="h5">
+                    Infrastructure Reporting Portal
+                  </Typography>
+                </Hidden>
+              </Grid>
+              <Grid item xs />
+              <Grid item>
+                <Tooltip title="Toggle light or dark mode">
+                  <IconButton color="inherit" onClick={() => swapTheme()}>
+                    <InvertColorsIcon />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+              <Grid item>
+                <Tooltip title="Mail • 5 new Messages">
+                  <IconButton
+                    color="inherit"
+                    onClick={this.handleClickOpenMessage}
+                  >
+                    <Badge
+                      className={classes.margin}
+                      badgeContent={5}
+                      color="secondary"
+                    >
+                      <MailIcon />
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+              <Grid item>
+                <Tooltip title="Alerts • 3 alters">
+                  <IconButton
+                    color="inherit"
+                    onClick={this.handleClickOpenAlert}
+                  >
+                    <Badge
+                      className={classes.margin}
+                      badgeContent={3}
+                      color="error"
+                    >
+                      <NotificationsIcon />
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+              <Grid item>
+                <IconButton
+                  color="inherit"
+                  className={classes.iconButtonAvatar}
+                  onClick={this.handleClickOpen}
+                >
+                  <Avatar
+                    className={classes.avatar}
+                    src={require("../public/images/servon-opp-summit.jpg")}
+                  />
+                </IconButton>
+                <SimpleDialogWrapped
+                  selectedValue={this.state.selectedValue}
+                  open={this.state.open}
+                  onClose={this.handleClose}
+                />
+                <MessageDialogWrapped
+                  selectedValue={this.state.selectedValue}
+                  open={this.state.openMessage}
+                  onClose={this.handleCloseMessage}
+                />
+                <AlertDialogWrapped
+                  selectedValue={this.state.selectedValue}
+                  open={this.state.openAlert}
+                  onClose={this.handleCloseAlert}
+                />
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
+        <AppBar
+          component="div"
+          className={classes.secondaryBar}
+          color="inherit"
+          position="static"
+          elevation={1}
+        >
+          <Toolbar>
+            <Grid container alignItems="center" spacing={8}>
+              <Grid container sm>
+                <Hidden mdUp>
+                  <Grid xs />
+                </Hidden>
+                <Button
+                  color="default"
+                  aria-owns={open ? "External-Links" : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleMenuClick}
+                >
+                  External Links
+                </Button>
+
+                <Button
+                  color="default"
+                  component={Link}
+                  to="/AdminPortal"
+                  className={
+                    currentUrl.toLowerCase() === "AdminPortal".toLowerCase() &&
+                    classes.itemActiveItem
+                  }
+                >
+                  Admin Portal
+                </Button>
+                <Menu
+                  id="External-Links"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={this.handleMenuClose}
+                  TransitionComponent={Fade}
+                >
+                  <MenuItem
+                    onClick={this.handleMenuClose}
+                    component={"a"}
+                    href="https://nb.service-now.com/nav_to.do?uri=%2Fhome.do%3F"
+                  >
+                    Service Now
+                  </MenuItem>
+                  <MenuItem
+                    onClick={this.handleMenuClose}
+                    component={"a"}
+                    href="http://eisportal.nb.com/"
+                  >
+                    Eis Portal
+                  </MenuItem>
+                  <MenuItem
+                    onClick={this.handleMenuClose}
+                    component={"a"}
+                    href="http://dms.nb.com"
+                  >
+                    Desktop Management System
+                  </MenuItem>
+                </Menu>
+              </Grid>
+              <Grid item xs />
+              <Grid container sm>
+                <div className={classes.grow} />
+                <div className={classNames(classes.search, classes.roots)}>
+                  <div className={classes.searchIcon} />
+                  <Select
+                    classes={classes}
+                    styles={selectStyles}
+                    options={suggestions}
+                    components={components}
+                    value={this.state.single}
+                    onChange={this.handleChange}
+                    placeholder="Search"
+                    isClearable
+                    textFieldProps={
+                      {
+                        /*     label: "Label",
+                      InputLabelProps: {
+                        shrink: true
+                      } */
+                      }
+                    }
+                  />
+                </div>
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
+      </Fragment>
+    );
+  }
+}
+Header.propTypes = {
+  classes: PropTypes.object.isRequired,
+  onDrawerToggle: PropTypes.func.isRequired,
+  navValue: PropTypes.number.isRequired,
+  getNavValue: PropTypes.func.isRequired,
+  swapTheme: PropTypes.func.isRequired
+};
 
 const NoOptionsMessage = props => (
   <Typography
@@ -279,10 +556,6 @@ class SimpleDialog extends React.Component {
     this.props.onClose(this.props.selectedValue);
   };
 
-  handleListItemClick = value => {
-    this.props.onClose(value);
-  };
-
   render() {
     const { classes, onClose, selectedValue, ...other } = this.props;
 
@@ -293,31 +566,21 @@ class SimpleDialog extends React.Component {
         {...other}
       >
         <DialogTitle id="simple-dialog-title">
-          {" "}
           <Avatar
-            className={classes.avatar}
+            className={classNames(classes.avatar, classes.ListItemAvatar)}
             src={require("../public/images/servon-opp-summit.jpg")}
             sizes="lg"
           />
         </DialogTitle>
-        <DialogTitle id="simple-dialog-title">
-          <Typography variant="h6">Account Settings</Typography>
-        </DialogTitle>
         <div>
           <List>
-            <ListItem
-              button
-              onClick={() => {
-                return this.handleListItemClick(this);
-              }}
-              key={0}
-            >
+            <ListItem button component={Link} to="/Profile" key={0}>
               <ListItemAvatar>
                 <Avatar className={classes.avatar}>
                   <PersonIcon />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary="Do Something" />
+              <ListItemText primary="My Profile" />
             </ListItem>
           </List>
         </div>
@@ -334,240 +597,88 @@ SimpleDialog.propTypes = {
 
 const SimpleDialogWrapped = withStyles(styles)(SimpleDialog);
 
-class Header extends PureComponent {
-  state = {
-    open: false,
-    selectedValue: null,
-    anchorEl: null,
-
-    single: null,
-    multi: null
-  };
-
-  handleChange = value => {
-    if (value !== null || "") {
-      return (window.location = value.route);
-    }
-  };
-
-  handleClickOpen = () => {
-    this.setState({
-      open: true
-    });
-  };
-
-  handleClose = value => {
-    this.setState({ selectedValue: value, open: false });
-  };
-
-  handleMenuClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleMenuClose = () => {
-    this.setState({ anchorEl: null });
+class MessageDialog extends React.Component {
+  handleClose = () => {
+    this.props.onClose(this.props.selectedValue);
   };
 
   render() {
-    const { classes, onDrawerToggle, swapTheme, themeColor } = this.props;
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
-    const url = window.location.pathname;
-    const currentUrl = url.substr(url.lastIndexOf("/") + 1);
-    const Select = themeColor === "dark" ? SelectDark : SelectLight;
-    const selectStyles = {
-      input: base => ({
-        ...base,
-        color: themeColor === "dark" && "#fff",
-        "& input": {
-          font: "inherit"
-        }
-      })
-    };
-    return (
-      <Fragment>
-        <AppBar
-          color="default"
-          position="sticky"
-          elevation={0}
-          className={classes.AppBar}
-        >
-          <Toolbar>
-            <Grid container spacing={8} alignItems="center">
-              <Hidden mdUp>
-                <Grid item>
-                  <IconButton
-                    color="inherit"
-                    aria-label="Open drawer"
-                    onClick={onDrawerToggle}
-                    className={classes.menuButton}
-                  >
-                    <MenuIcon />
-                  </IconButton>
-                </Grid>
-              </Hidden>
-              <Grid item sm>
-                <Hidden smDown>
-                  <Typography color="inherit" variant="h5">
-                    Infrastructure Reporting Portal
-                  </Typography>
-                </Hidden>
-              </Grid>
-              <Grid item xs />
-              <Grid item>
-                <Tooltip title="Toggle light or dark mode">
-                  <IconButton color="inherit" onClick={() => swapTheme()}>
-                    <InvertColorsIcon />
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-              <Grid item>
-                <Tooltip title="Mail • 5 new Messages">
-                  <IconButton color="inherit">
-                    <Badge
-                      className={classes.margin}
-                      badgeContent={5}
-                      color="secondary"
-                    >
-                      <MailIcon />
-                    </Badge>
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-              <Grid item>
-                <Tooltip title="Alerts • 3 alters">
-                  <IconButton color="inherit">
-                    <Badge
-                      className={classes.margin}
-                      badgeContent={3}
-                      color="error"
-                    >
-                      <NotificationsIcon />
-                    </Badge>
-                  </IconButton>
-                </Tooltip>
-              </Grid>
-              <Grid item>
-                <IconButton
-                  color="inherit"
-                  className={classes.iconButtonAvatar}
-                  onClick={this.handleClickOpen}
-                >
-                  <Avatar
-                    className={classes.avatar}
-                    src={require("../public/images/servon-opp-summit.jpg")}
-                  />
-                </IconButton>
-                <SimpleDialogWrapped
-                  selectedValue={this.state.selectedValue}
-                  open={this.state.open}
-                  onClose={this.handleClose}
-                />
-              </Grid>
-            </Grid>
-          </Toolbar>
-        </AppBar>
-        <AppBar
-          component="div"
-          className={classes.secondaryBar}
-          color="inherit"
-          position="static"
-          elevation={1}
-        >
-          <Toolbar>
-            <Grid container alignItems="center" spacing={8}>
-              <Grid container sm>
-                <Hidden mdUp>
-                  <Grid xs />
-                </Hidden>
-                <Button
-                  color="default"
-                  aria-owns={open ? "External-Links" : undefined}
-                  aria-haspopup="true"
-                  onClick={this.handleMenuClick}
-                >
-                  External Links
-                </Button>
+    const { classes, onClose, selectedValue, ...other } = this.props;
 
-                <Button
-                  color="default"
-                  component={Link}
-                  to="/AdminPortal"
-                  className={
-                    currentUrl.toLowerCase() === "AdminPortal".toLowerCase() &&
-                    classes.itemActiveItem
-                  }
-                >
-                  Admin Portal
-                </Button>
-                <Menu
-                  id="External-Links"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={this.handleMenuClose}
-                  TransitionComponent={Fade}
-                >
-                  <MenuItem
-                    onClick={this.handleMenuClose}
-                    component={"a"}
-                    href="https://nb.service-now.com/nav_to.do?uri=%2Fhome.do%3F"
-                  >
-                    Service Now
-                  </MenuItem>
-                  <MenuItem
-                    onClick={this.handleMenuClose}
-                    component={"a"}
-                    href="http://eisportal.nb.com/"
-                  >
-                    Eis Portal
-                  </MenuItem>
-                  <MenuItem
-                    onClick={this.handleMenuClose}
-                    component={"a"}
-                    href="http://dms.nb.com"
-                  >
-                    Desktop Management System
-                  </MenuItem>
-                </Menu>
-              </Grid>
-              <Grid item xs />
-              <Grid container sm>
-                <div className={classes.grow} />
-                <div className={classNames(classes.search, classes.roots)}>
-                  <div className={classes.searchIcon} />
-                  <Select
-                    classes={classes}
-                    styles={selectStyles}
-                    options={suggestions}
-                    components={components}
-                    value={this.state.single}
-                    onChange={this.handleChange}
-                    placeholder="Search"
-                    isClearable
-                    textFieldProps={
-                      {
-                        /*     label: "Label",
-                      InputLabelProps: {
-                        shrink: true
-                      } */
-                      }
-                    }
-                  />
-                </div>
-              </Grid>
-            </Grid>
-          </Toolbar>
-        </AppBar>
-      </Fragment>
+    return (
+      <Dialog
+        onClose={this.handleClose}
+        aria-labelledby="simple-dialog-title"
+        {...other}
+      >
+        <DialogTitle id="simple-dialog-title">
+          <Typography>Messages</Typography>
+        </DialogTitle>
+        <div>
+          <List>
+            <ListItem button component={Link} to="/Profile" key={0}>
+              <ListItemAvatar>
+                <Avatar>
+                  <MailIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary="Some Message" />
+            </ListItem>
+          </List>
+        </div>
+      </Dialog>
     );
   }
 }
-Header.propTypes = {
+
+MessageDialog.propTypes = {
   classes: PropTypes.object.isRequired,
-  onDrawerToggle: PropTypes.func.isRequired,
-  navValue: PropTypes.number.isRequired,
-  getNavValue: PropTypes.func.isRequired,
-  swapTheme: PropTypes.func.isRequired
+  onClose: PropTypes.func,
+  selectedValue: PropTypes.string
 };
+
+const MessageDialogWrapped = withStyles(styles)(MessageDialog);
+
+class AlertDialog extends React.Component {
+  handleClose = () => {
+    this.props.onClose(this.props.selectedValue);
+  };
+
+  render() {
+    const { classes, onClose, selectedValue, ...other } = this.props;
+
+    return (
+      <Dialog
+        onClose={this.handleClose}
+        aria-labelledby="simple-dialog-title"
+        {...other}
+      >
+        <DialogTitle id="simple-dialog-title">
+          <Typography>Alerts</Typography>
+        </DialogTitle>
+        <div>
+          <List>
+            <ListItem button component={Link} to="/Profile" key={0}>
+              <ListItemAvatar>
+                <Avatar>
+                  <NotificationsIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary="Some Alert" />
+            </ListItem>
+          </List>
+        </div>
+      </Dialog>
+    );
+  }
+}
+
+AlertDialog.propTypes = {
+  classes: PropTypes.object.isRequired,
+  onClose: PropTypes.func,
+  selectedValue: PropTypes.string
+};
+
+const AlertDialogWrapped = withStyles(styles)(AlertDialog);
 
 export default withStyles(styles)(Header);

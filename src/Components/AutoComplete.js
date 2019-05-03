@@ -29,11 +29,18 @@ const currentUrl = url.substr(url.lastIndexOf("/") + 1);
 
 export default [
   {
+    label: "My Profile",
+    icon: <People />,
+    route: "/Profile",
+    active: currentUrl.toLowerCase() === "profile" && true
+  },
+  {
     label: "NB Disable",
     icon: <ReportOff />,
     route: "/Monitoring/NbDisable",
     active: currentUrl.toLowerCase() === "nbdisable" && true
   },
+
   {
     label: "Maintenance Disable",
     icon: <ReportOff />,

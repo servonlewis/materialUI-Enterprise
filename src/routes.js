@@ -40,6 +40,7 @@ import SignoffForms from "./Containers/Self Service/SignoffForms";
 import NetApp from "./Containers/Storage/NetApp";
 import NetBackup from "./Containers/Storage/NetBackup";
 import VSP from "./Containers/Storage/VSP";
+import Profile from "./Containers/Profile";
 
 const store = configureStore();
 
@@ -53,6 +54,7 @@ export const makeMainRoutes = () => {
             path="/AdminPortal"
             render={props => <AdminPortal {...props} />}
           />
+          <Route path="/Profile" render={props => <Profile {...props} />} />
           <Route
             path="/Desktops/DesktopMetrics"
             render={props => <DesktopMetrics {...props} />}
