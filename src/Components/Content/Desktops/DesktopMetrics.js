@@ -19,7 +19,9 @@ const styles = theme => ({
     height: 20
   },
   link: {
-    display: "flex"
+    display: "flex",
+    textDecoration: "none",
+    color: "grey"
   }
 });
 
@@ -34,7 +36,7 @@ class Content extends PureComponent {
             separator={<NavigateNextIcon fontSize="small" />}
             arial-label="Breadcrumb"
           >
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link to="/" className={classes.link}>
               <HomeIcon className={classes.icon} />
               Home
             </Link>

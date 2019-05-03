@@ -22,13 +22,19 @@ class Home extends PureComponent {
   componentDidMount() {
     this.props.getUser();
     if (Cookies.get("theme")) {
-      Cookies.get("theme") === "dark" && this.setState({ myTheme: darkTheme });
+      Cookies.get("theme") === "dark"
+        ? this.setState({ myTheme: darkTheme, themeColor: "dark" })
+        : this.setState({ myTheme: theme, themeColor: "light" });
     }
+
+    this.props.collapseMe(true);
+    console.log(Cookies.get("theme"));
   }
 
   swapTheme = () => {
     this.setState(prevState => ({
-      myTheme: prevState.myTheme === darkTheme ? theme : darkTheme
+      myTheme: prevState.myTheme === darkTheme ? theme : darkTheme,
+      themeColor: prevState.myTheme === darkTheme ? "light" : "dark"
     }));
     return Cookies.set(
       "theme",
@@ -47,7 +53,7 @@ class Home extends PureComponent {
       AllUsers,
       allUserData
     } = this.props;
-    const { myTheme } = this.state;
+    const { myTheme, themeColor } = this.state;
     const { swapTheme } = this;
     return (
       <div className="container">
@@ -61,6 +67,7 @@ class Home extends PureComponent {
                   variant="temporary"
                   open={mobileOpen}
                   onClose={() => collapseMe(mobileOpen)}
+                  closeMe={() => collapseMe(mobileOpen)}
                 />
               </Hidden>
               <Hidden smDown implementation="css">
@@ -74,6 +81,7 @@ class Home extends PureComponent {
                 getNavValue={getNavValue}
                 swapTheme={swapTheme}
                 onDrawerToggle={() => collapseMe(mobileOpen)}
+                themeColor={themeColor}
               />
               <main className={classes.mainContent}>
                 <Content

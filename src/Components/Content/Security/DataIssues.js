@@ -19,16 +19,13 @@ const styles = theme => ({
     height: 20
   },
   link: {
-    display: "flex"
+    display: "flex",
+    textDecoration: "none",
+    color: "grey"
   }
 });
 
 class Content extends PureComponent {
-  handleClick = event => {
-    event.preventDefault();
-    console.log("You clicked a breadcrumb.");
-  };
-
   render() {
     const { classes } = this.props;
     return (
@@ -39,7 +36,7 @@ class Content extends PureComponent {
             separator={<NavigateNextIcon fontSize="small" />}
             arial-label="Breadcrumb"
           >
-            <Link to="/" style={{ textDecoration: "none" }}>
+            <Link to="/" className={classes.link}>
               <HomeIcon className={classes.icon} />
               Home
             </Link>

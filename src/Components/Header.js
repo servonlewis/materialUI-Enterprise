@@ -30,6 +30,14 @@ import PersonIcon from "@material-ui/icons/Person";
 import blue from "@material-ui/core/colors/blue";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { Link } from "react-router-dom";
+import SelectLight from "../../node_modules/react-select/dist/react-select";
+import SelectDark from "../../node_modules/react-select/dist/react-select2";
+import Paper from "@material-ui/core/Paper";
+import Chip from "@material-ui/core/Chip";
+import CancelIcon from "@material-ui/icons/Cancel";
+import { emphasize } from "@material-ui/core/styles/colorManipulator";
+import classNames from "classnames";
+import suggestions from "./AutoComplete";
 
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
@@ -119,8 +127,152 @@ const styles = theme => ({
         width: 200
       }
     }
+  },
+  input: {
+    display: "flex",
+    padding: 0
+  },
+  valueContainer: {
+    display: "flex",
+    flexWrap: "wrap",
+    flex: 1,
+    alignItems: "center",
+    overflow: "hidden"
+  },
+  noOptionsMessage: {
+    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`
+  },
+  singleValue: {
+    fontSize: 16
+  },
+  placeholder: {
+    position: "relative",
+    left: 2,
+    fontSize: 16
+  },
+  divider: {
+    height: theme.spacing.unit * 2
+  },
+  paper: {
+    position: "absolute",
+    zIndex: 1,
+    marginTop: theme.spacing.unit,
+    left: 0,
+    right: 0
+  },
+  roots: {
+    flexGrow: 1
   }
 });
+
+const NoOptionsMessage = props => (
+  <Typography
+    color="textSecondary"
+    className={props.selectProps.classes.noOptionsMessage}
+    {...props.innerProps}
+  >
+    {props.children}
+  </Typography>
+);
+
+const inputComponent = ({ inputRef, ...props }) => (
+  <div ref={inputRef} {...props} />
+);
+
+const Control = props => (
+  <TextField
+    fullWidth
+    InputProps={{
+      inputComponent,
+      inputProps: {
+        className: props.selectProps.classes.input,
+        inputRef: props.innerRef,
+        children: props.children,
+        endAdornment: (
+          <InputAdornment position="end">
+            {" "}
+            <SearchIcon />
+          </InputAdornment>
+        ),
+        ...props.innerProps
+      }
+    }}
+    {...props.selectProps.textFieldProps}
+  />
+);
+
+const Option = props => (
+  <MenuItem
+    buttonRef={props.innerRef}
+    selected={props.isFocused}
+    component="div"
+    style={{
+      fontWeight: props.isSelected ? 500 : 400
+    }}
+    {...props.innerProps}
+  >
+    {props.children}
+  </MenuItem>
+);
+
+const Placeholder = props => (
+  <Typography
+    color="textSecondary"
+    className={props.selectProps.classes.placeholder}
+    {...props.innerProps}
+  >
+    {props.children}
+  </Typography>
+);
+
+const SingleValue = props => (
+  <Typography
+    className={props.selectProps.classes.singleValue}
+    {...props.innerProps}
+  >
+    {props.children}
+  </Typography>
+);
+
+const ValueContainer = props => (
+  <div className={props.selectProps.classes.valueContainer}>
+    <SearchIcon fontSizeSmall />
+    {props.children}
+  </div>
+);
+
+const MultiValue = props => (
+  <Chip
+    tabIndex={-1}
+    label={props.children}
+    className={classNames(props.selectProps.classes.chip, {
+      [props.selectProps.classes.chipFocused]: props.isFocused
+    })}
+    onDelete={props.removeProps.onClick}
+    deleteIcon={<CancelIcon {...props.removeProps} />}
+  />
+);
+
+const MenuSelect = props => (
+  <Paper
+    square
+    className={props.selectProps.classes.paper}
+    {...props.innerProps}
+  >
+    {props.children}
+  </Paper>
+);
+
+const components = {
+  Control,
+  MenuSelect,
+  MultiValue,
+  NoOptionsMessage,
+  Option,
+  Placeholder,
+  SingleValue,
+  ValueContainer
+};
 
 class SimpleDialog extends React.Component {
   handleClose = () => {
@@ -186,7 +338,16 @@ class Header extends PureComponent {
   state = {
     open: false,
     selectedValue: null,
-    anchorEl: null
+    anchorEl: null,
+
+    single: null,
+    multi: null
+  };
+
+  handleChange = value => {
+    if (value !== null || "") {
+      return (window.location = value.route);
+    }
   };
 
   handleClickOpen = () => {
@@ -208,12 +369,21 @@ class Header extends PureComponent {
   };
 
   render() {
-    const { classes, onDrawerToggle, swapTheme } = this.props;
+    const { classes, onDrawerToggle, swapTheme, themeColor } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
     const url = window.location.pathname;
     const currentUrl = url.substr(url.lastIndexOf("/") + 1);
-
+    const Select = themeColor === "dark" ? SelectDark : SelectLight;
+    const selectStyles = {
+      input: base => ({
+        ...base,
+        color: themeColor === "dark" && "#fff",
+        "& input": {
+          font: "inherit"
+        }
+      })
+    };
     return (
       <Fragment>
         <AppBar
@@ -363,24 +533,25 @@ class Header extends PureComponent {
               <Grid item xs />
               <Grid container sm>
                 <div className={classes.grow} />
-                <div className={classes.search}>
+                <div className={classNames(classes.search, classes.roots)}>
                   <div className={classes.searchIcon} />
-                  <TextField
-                    fullWidth
+                  <Select
+                    classes={classes}
+                    styles={selectStyles}
+                    options={suggestions}
+                    components={components}
+                    value={this.state.single}
+                    onChange={this.handleChange}
                     placeholder="Search"
-                    InputProps={{
-                      disableUnderline: false,
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          {" "}
-                          <SearchIcon />
-                        </InputAdornment>
-                      )
-                    }}
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput
-                    }}
+                    isClearable
+                    textFieldProps={
+                      {
+                        /*     label: "Label",
+                      InputLabelProps: {
+                        shrink: true
+                      } */
+                      }
+                    }
                   />
                 </div>
               </Grid>
